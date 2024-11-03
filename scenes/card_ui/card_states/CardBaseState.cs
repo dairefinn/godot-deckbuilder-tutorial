@@ -1,5 +1,6 @@
-using System.Reflection;
 using Godot;
+
+namespace DeckBuilder;
 
 public partial class CardBaseState : CardState
 {

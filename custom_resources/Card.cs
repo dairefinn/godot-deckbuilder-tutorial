@@ -1,3 +1,5 @@
+namespace DeckBuilder;
+
 using Godot;
 
 [GlobalClass]
@@ -21,6 +23,7 @@ public partial class Card : Resource
     [Export] public string id;
     [Export] public Type type;
     [Export] public Target target;
+    [Export] public int cost;
 
     public bool GetIsSingleTargeted() {
         return target == Target.SINGLE_ENEMY;

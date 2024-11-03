@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace DeckBuilder;
+
 public partial class CardTargetSelector : Node2D
 {
 

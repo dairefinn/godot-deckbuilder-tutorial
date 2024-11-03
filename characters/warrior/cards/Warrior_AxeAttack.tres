@@ -7,3 +7,4 @@ script = ExtResource("1_p5co2")
 id = "warrior_axe_attack"
 type = 0
 target = 1
+cost = 0

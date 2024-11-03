@@ -1,5 +1,7 @@
 using Godot;
 
+namespace DeckBuilder;
+
 public partial class CardClickedState : CardState
 {
 	
