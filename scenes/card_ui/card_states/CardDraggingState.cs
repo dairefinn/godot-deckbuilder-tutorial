@@ -5,25 +5,36 @@ namespace DeckBuilder;
 public partial class CardDraggingState : CardState
 {
 
+	private Events globalEvents;
+
 	private const float DRAGGING_MINIMUM_THRESHOLD = 0.05f;
 	private bool minimumDragTimeElapsed = false;
 
+	public override void _Ready()
+    {
+		globalEvents = GetNode<Events>("/root/Events");
+    }
+
     public override void Enter()
     {
-		base.Enter();
-
 		Node uiLayer = GetTree().GetFirstNodeInGroup("ui_layer");
 		if (uiLayer != null)
 		{
 			cardUI.Reparent(uiLayer);
 		}
 
-		cardUI.color.Color = Colors.NavyBlue;
+		cardUI.panel.Set("theme_override_styles/panel", CardUI.DRAG_STYLEBOX);
+		globalEvents.EmitSignal(Events.SignalName.CardDragStarted, cardUI);
 
 		minimumDragTimeElapsed = false;
 		SceneTreeTimer thresholdTimer = GetTree().CreateTimer(DRAGGING_MINIMUM_THRESHOLD, false);
 		thresholdTimer.Timeout += () => minimumDragTimeElapsed = true;
     }
+
+	public override void Exit()
+	{
+		globalEvents.EmitSignal(Events.SignalName.CardDragEnded, cardUI);
+	}
 
     public override void OnInput(InputEvent @event)
     {

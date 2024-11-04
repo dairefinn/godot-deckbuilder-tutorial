@@ -7,8 +7,6 @@ public partial class CardBaseState : CardState
 
 	public override async void Enter()
 	{
-		base.Enter();
-
 		if (!cardUI.IsNodeReady())
 		{
 			await ToSignal(cardUI, "ready");
@@ -19,18 +17,37 @@ public partial class CardBaseState : CardState
 			cardUI.tween.Kill();
 		}
 
+		cardUI.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
 		cardUI.EmitSignal(CardUI.SignalName.ReparentRequested, cardUI);
-		cardUI.color.Color = Colors.WebGreen;
 		cardUI.PivotOffset = Vector2.Zero;
 	}
 
 	public override void OnGuiInput(InputEvent @event)
 	{
+		if (!cardUI.playable) return;
+		if (cardUI.disabled) return;
+
 		if (@event.IsActionPressed("left_mouse"))
 		{
 			cardUI.PivotOffset = cardUI.GetGlobalMousePosition() - cardUI.GlobalPosition;
 			EmitSignal(SignalName.TransitionRequested, this, (int)CardState.State.CLICKED);
 		}
+	}
+
+    public override void OnMouseEntered()
+    {
+		if (!cardUI.playable) return;
+		if (cardUI.disabled) return;
+
+		cardUI.panel.Set("theme_override_styles/panel", CardUI.HOVER_STYLEBOX);
+    }
+
+	public override void OnMouseExited()
+	{
+		if (!cardUI.playable) return;
+		if (cardUI.disabled) return;
+
+		cardUI.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
 	}
 
 }

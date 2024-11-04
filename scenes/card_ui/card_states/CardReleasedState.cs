@@ -9,15 +9,12 @@ public partial class CardReleasedState : CardState
 
 	public override void Enter()
 	{
-		base.Enter();
-
-		cardUI.color.Color = Colors.DarkViolet;
 		played = false;
 
 		if (cardUI.targets.Count > 0)
 		{
 			played = true;
-			GD.Print("Card played for target: " + cardUI.targets[0].Name);
+			cardUI.Play();
 		}
 	}
 

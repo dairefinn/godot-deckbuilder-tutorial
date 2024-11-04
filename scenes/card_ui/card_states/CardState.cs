@@ -23,7 +23,6 @@ public partial class CardState : Node
 
     public virtual void Enter()
     {
-		cardUI.state.Text = cardUI.card.id + "[" +  state + "]";
     }
 
     public virtual void Exit()

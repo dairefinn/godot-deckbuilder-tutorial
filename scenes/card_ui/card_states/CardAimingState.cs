@@ -16,9 +16,6 @@ public partial class CardAimingState : CardState
 
     public override void Enter()
 	{
-		base.Enter();
-
-		cardUI.color.Color = Colors.WebPurple;
 		cardUI.targets.Clear();
 
 		float cardOffsetX = (cardUI.parent.Size.X - cardUI.Size.X) / 2;

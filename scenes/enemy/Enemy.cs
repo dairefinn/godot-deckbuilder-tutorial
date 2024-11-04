@@ -2,7 +2,7 @@ using Godot;
 
 namespace DeckBuilder;
 
-public partial class Enemy : Node2D
+public partial class Enemy : Area2D
 {
 
 	const int ARROW_OFFSET = 5;
@@ -22,6 +22,9 @@ public partial class Enemy : Node2D
 		sprite2D = GetNode<Sprite2D>("Sprite2D");
 		statsUI = GetNode<StatsUI>("StatsUI");
 		arrow = GetNode<Sprite2D>("Arrow");
+
+		AreaEntered += OnAreaEntered;
+		AreaExited += OnAreaExited;
 	}
 
 	public void SetStats(Stats value)
@@ -62,6 +65,16 @@ public partial class Enemy : Node2D
 		{
 			QueueFree(); // Remove the enemy from the scene
 		}
+	}
+
+	public void OnAreaEntered(Area2D area)
+	{
+		arrow.Show();
+	}
+
+	public void OnAreaExited(Area2D area)
+	{
+		arrow.Hide();
 	}
 
 }

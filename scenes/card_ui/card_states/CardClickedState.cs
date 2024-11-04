@@ -7,9 +7,6 @@ public partial class CardClickedState : CardState
 	
 	public override void Enter()
 	{
-		base.Enter();
-
-		cardUI.color.Color = Colors.Orange;
 		cardUI.dropPointDetector.Monitoring = true;
 	}
 
