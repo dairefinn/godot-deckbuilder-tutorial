@@ -49,7 +49,7 @@ public partial class Stats : Resource
         health += amount;
     }
 
-    public Resource CreateInstance()
+    public Stats CreateInstance()
     {
         Stats instance = Duplicate() as Stats;
         instance.health = maxHealth;

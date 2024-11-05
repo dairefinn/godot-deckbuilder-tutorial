@@ -9,6 +9,7 @@ public partial class CardAimingState : CardState
 
 	private Events globalEvents;
 
+
     public override void _Ready()
     {
 		globalEvents = GetNode<Events>("/root/Events");

@@ -22,7 +22,7 @@ public partial class Player : Node2D
 
 	public void SetStats(CharacterStats value)
 	{
-		_stats = value.CreateInstance() as CharacterStats;
+		_stats = value;
 
 		if (!value.IsConnected(CharacterStats.SignalName.StatsChanged, Callable.From(UpdateStats)))
 		{

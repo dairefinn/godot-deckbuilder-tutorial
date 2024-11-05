@@ -7,6 +7,7 @@ public partial class CardDraggingState : CardState
 
 	private Events globalEvents;
 
+
 	private const float DRAGGING_MINIMUM_THRESHOLD = 0.05f;
 	private bool minimumDragTimeElapsed = false;
 

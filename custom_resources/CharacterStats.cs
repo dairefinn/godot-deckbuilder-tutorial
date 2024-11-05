@@ -14,7 +14,7 @@ public partial class CharacterStats : Stats
         get => _mana;
         set => SetMana(value);
     }
-    private int _mana;
+    public int _mana;
 
     public CardPile deck;
     public CardPile discard;
@@ -23,7 +23,7 @@ public partial class CharacterStats : Stats
     public void SetMana(int value)
     {
         _mana = value;
-        EmitSignal(Stats.SignalName.StatsChanged);
+        EmitSignal(CharacterStats.SignalName.StatsChanged);
     }
 
     public void ResetMana()
@@ -36,7 +36,7 @@ public partial class CharacterStats : Stats
         return mana > card.cost;
     }
 
-    public new Resource CreateInstance()
+    public new CharacterStats CreateInstance()
     {
         CharacterStats instance = Duplicate() as CharacterStats;
         instance.health = maxHealth;

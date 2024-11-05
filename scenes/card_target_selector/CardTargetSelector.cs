@@ -8,6 +8,7 @@ public partial class CardTargetSelector : Node2D
 
 	private Events globalEvents;
 
+
 	const int ARC_POINTS = 8;
 
 	public Area2D area2D;

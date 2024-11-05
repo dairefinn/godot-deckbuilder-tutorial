@@ -4,8 +4,16 @@ namespace DeckBuilder;
 
 public partial class CardBaseState : CardState
 {
+	
+	private Events globalEvents;
 
-	public override async void Enter()
+
+    public override void _Ready()
+    {
+        globalEvents = GetNode<Events>("/root/Events");
+    }
+
+    public override async void Enter()
 	{
 		if (!cardUI.IsNodeReady())
 		{
@@ -20,6 +28,8 @@ public partial class CardBaseState : CardState
 		cardUI.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
 		cardUI.EmitSignal(CardUI.SignalName.ReparentRequested, cardUI);
 		cardUI.PivotOffset = Vector2.Zero;
+
+		globalEvents.EmitSignal(Events.SignalName.TooltipHideRequested);
 	}
 
 	public override void OnGuiInput(InputEvent @event)
@@ -40,6 +50,7 @@ public partial class CardBaseState : CardState
 		if (cardUI.disabled) return;
 
 		cardUI.panel.Set("theme_override_styles/panel", CardUI.HOVER_STYLEBOX);
+		globalEvents.EmitSignal(Events.SignalName.CardTooltipRequested, cardUI.card.icon, cardUI.card.tooltipText);
     }
 
 	public override void OnMouseExited()
@@ -48,6 +59,7 @@ public partial class CardBaseState : CardState
 		if (cardUI.disabled) return;
 
 		cardUI.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
+		globalEvents.EmitSignal(Events.SignalName.TooltipHideRequested);
 	}
 
 }

@@ -13,6 +13,7 @@ public partial class CardUI : Control
 
 	private Events globalEvents;
 
+
     [Signal] public delegate void ReparentRequestedEventHandler(CardUI whichCardUI);
 
 	[Export] public Card card {
@@ -20,7 +21,7 @@ public partial class CardUI : Control
 		set => SetCard(value);
 	}
 	private Card _card;
-	[Export] public CharacterStats characterStats; // TODO: Temporary, remove later
+	[Export] public CharacterStats charStats;
 
 	public Panel panel;
 	public Label cost;
@@ -77,7 +78,6 @@ public partial class CardUI : Control
     public override void _Input(InputEvent @event)
     {
 		cardStateMachine.OnInput(@event);
-
     }
 
     public void OnGuiInput(InputEvent @event)
@@ -118,7 +118,7 @@ public partial class CardUI : Control
 	{
 		if (card == null) return;
 
-		card.Play(targets, characterStats, globalEvents);
+		card.Play(targets, charStats, globalEvents);
 
 		QueueFree();
 	}
@@ -126,6 +126,10 @@ public partial class CardUI : Control
 	public void SetPlayable(bool value)
 	{
 		_playable = value;
+
+		if (!IsInstanceValid(cost)) return;
+		if (!IsInstanceValid(icon)) return;
+
 		if (!playable)
 		{
 			cost.AddThemeColorOverride("font_color", Colors.Red);
@@ -140,13 +144,13 @@ public partial class CardUI : Control
 
 	public void SetCharStats(CharacterStats value)
 	{
-		characterStats = value;
-		characterStats.StatsChanged += OnCharStatsChanged;
+		charStats = value;
+		charStats.StatsChanged += OnCharStatsChanged;
 	}
 
 	public void OnCharStatsChanged()
 	{
-		playable = characterStats.CanPlayCard(card);
+		playable = charStats.CanPlayCard(card);
 	}
 
 	public void OnCardDragOrAimingStarted(CardUI usedCard)
@@ -159,7 +163,7 @@ public partial class CardUI : Control
 	public void OnCardDragOrAimingEnded(CardUI _usedCard)
 	{
 		disabled = false;
-		playable = characterStats.CanPlayCard(card);
+		playable = charStats.CanPlayCard(card);
 	}
 
 }

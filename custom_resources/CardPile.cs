@@ -40,6 +40,16 @@ public partial class CardPile : Resource
         EmitSignal(CardPile.SignalName.CardPileSizeChanged, cards.Length);
     }
 
+    public void Shuffle()
+    {
+        Random random = new();
+        for (int i = 0; i < cards.Length; i++)
+        {
+            int randomIndex = random.Next(i, cards.Length);
+            (cards[randomIndex], cards[i]) = (cards[i], cards[randomIndex]);
+        }
+    }
+
     public override string ToString()
     {
         List<string> cardStrings = new();

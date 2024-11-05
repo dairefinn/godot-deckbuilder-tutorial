@@ -14,5 +14,18 @@ public partial class Events : Node
 
 	[Signal] public delegate void CardPlayedEventHandler(Card card);
 
+
+	// Tooltip related events
+
+	[Signal] public delegate void CardTooltipRequestedEventHandler(Texture2D icon, string text);
+	[Signal] public delegate void TooltipHideRequestedEventHandler();
+
+
+	// Player related events
+
+	[Signal] public delegate void PlayerHandDrawnEventHandler();
+	[Signal] public delegate void PlayerHandDiscardedEventHandler();
+	[Signal] public delegate void PlayerTurnEndedEventHandler();
+
 	
 }

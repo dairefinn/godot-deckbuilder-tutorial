@@ -1,12 +1,17 @@
 namespace DeckBuilder;
 
 using System;
+using System.Linq;
 using Godot;
 
 public partial class Hand : HBoxContainer
 {
 
 	private Events globalEvents;
+
+	[Export] public CharacterStats charStats;
+
+	private PackedScene cardUIResource = ResourceLoader.Load<PackedScene>("res://scenes/card_ui/card_ui.tscn");
 
 	public int cardsPlayedThisTurn = 0;
 	
@@ -15,27 +20,48 @@ public partial class Hand : HBoxContainer
 		globalEvents = GetNode<Events>("/root/Events");
 
 		globalEvents.CardPlayed += OnCardPlayed;
-
-		foreach (Node child in GetChildren())
-		{
-			if (child is CardUI cardUI)
-			{
-				cardUI.parent = this;
-				cardUI.ReparentRequested += OnReparentRequested;
-			}
-		}
 	}
 
-	private void OnReparentRequested(CardUI child)
+	public void AddCard(Card card)
 	{
-		child.Reparent(this);
-		int newIndex = Math.Clamp(child.originalIndex - cardsPlayedThisTurn, 0, GetChildCount());
-		CallDeferred(MethodName.MoveChild, child, newIndex);
+		CardUI newCardUI = cardUIResource.Instantiate() as CardUI;
+		AddChild(newCardUI);
+		newCardUI.ReparentRequested += OnReparentRequested;
+		newCardUI.card = card;
+		newCardUI.parent = this;
+		newCardUI.charStats = charStats;
+	}
+
+	public void DiscardCard(CardUI card)
+	{
+		card.QueueFree();
+	}
+
+	public void DisableHand()
+	{
+		foreach (CardUI card in GetChildren().Cast<CardUI>())
+		{
+			card.disabled = true;
+		}
 	}
 
 	public void OnCardPlayed(Card _card)
 	{
 		cardsPlayedThisTurn++;
+	}
+
+	private void OnReparentRequested(CardUI child)
+	{
+		child.disabled = true;
+		child.Reparent(this);
+		int newIndex = Math.Clamp(child.originalIndex - cardsPlayedThisTurn, 0, GetChildCount());
+		CallDeferred(MethodName.MoveChild, child, newIndex);
+		CallDeferred(MethodName.EnableCard, child);
+	}
+
+	private static void EnableCard(CardUI card)
+	{
+		card.disabled = false;
 	}
 
 }

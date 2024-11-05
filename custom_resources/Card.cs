@@ -31,7 +31,7 @@ public partial class Card : Resource
 
     [ExportGroup("Card visuals")]
     [Export] public Texture2D icon;
-    [Export] public string tooltipText;
+    [Export(PropertyHint.MultilineText)] public string tooltipText;
 
     public bool GetIsSingleTargeted() {
         return target == Target.SINGLE_ENEMY;
