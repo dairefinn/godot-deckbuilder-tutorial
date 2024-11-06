@@ -6,9 +6,6 @@ namespace DeckBuilder;
 public partial class CardTargetSelector : Node2D
 {
 
-	private Events globalEvents;
-
-
 	const int ARC_POINTS = 8;
 
 	public Area2D area2D;
@@ -19,13 +16,11 @@ public partial class CardTargetSelector : Node2D
 
     public override void _Ready()
     {
-		globalEvents = GetNode<Events>("/root/Events");
-
 		area2D = GetNode<Area2D>("Area2D");
 		cardArc = GetNode<Line2D>("CanvasLayer/CardArc");
 		
-		globalEvents.CardAimStarted += OnCardAimStarted;
-		globalEvents.CardAimEnded += OnCardAimEnded;
+		Events.Instance.CardAimStarted += OnCardAimStarted;
+		Events.Instance.CardAimEnded += OnCardAimEnded;
 
 		area2D.AreaEntered += OnArea2DEntered;
 		area2D.AreaExited += OnArea2DExited;

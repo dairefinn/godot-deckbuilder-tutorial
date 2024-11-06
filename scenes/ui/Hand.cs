@@ -7,8 +7,6 @@ using Godot;
 public partial class Hand : HBoxContainer
 {
 
-	private Events globalEvents;
-
 	[Export] public CharacterStats charStats;
 
 	private PackedScene cardUIResource = ResourceLoader.Load<PackedScene>("res://scenes/card_ui/card_ui.tscn");
@@ -17,9 +15,7 @@ public partial class Hand : HBoxContainer
 	
 	public override void _Ready()
 	{
-		globalEvents = GetNode<Events>("/root/Events");
-
-		globalEvents.CardPlayed += OnCardPlayed;
+		Events.Instance.CardPlayed += OnCardPlayed;
 	}
 
 	public void AddCard(Card card)

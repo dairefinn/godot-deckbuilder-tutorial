@@ -5,8 +5,6 @@ using Godot;
 public partial class BattleUI : CanvasLayer
 {
 
-	private Events globalEvents;
-
 	[Export] public CharacterStats charStats {
 		get => _charStats;
 		set => SetCharStats(value);
@@ -19,13 +17,11 @@ public partial class BattleUI : CanvasLayer
 
     public override void _Ready()
     {
-		globalEvents = GetNode<Events>("/root/Events");
-
 		hand = GetNode<Hand>("Hand");
 		manaUI = GetNode<ManaUI>("ManaUI");
 		endTurnButton = GetNode<Button>("%EndTurnButton");
 
-		globalEvents.PlayerHandDrawn += OnPlayerHandDrawn;
+		Events.Instance.PlayerHandDrawn += OnPlayerHandDrawn;
 		endTurnButton.Pressed += OnEndTurnButtonPressed;
     }
 
@@ -37,7 +33,7 @@ public partial class BattleUI : CanvasLayer
 	private void OnEndTurnButtonPressed()
 	{
 		endTurnButton.Disabled = true;
-		globalEvents.EmitSignal(Events.SignalName.PlayerTurnEnded);
+		Events.Instance.EmitSignal(Events.SignalName.PlayerTurnEnded);
 	}
 
 	public void SetCharStats(CharacterStats stats)

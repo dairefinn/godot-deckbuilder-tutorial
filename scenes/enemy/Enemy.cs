@@ -7,15 +7,22 @@ public partial class Enemy : Area2D
 
 	const int ARROW_OFFSET = 5;
 
-	public Sprite2D sprite2D;
-	public StatsUI statsUI;
-	public Sprite2D arrow;
-
-	[Export] public Stats stats {
+	[Export] public EnemyStats stats {
 		get => _stats;
-		set => SetStats(value);
+		set => SetEnemyStats(value);
 	}
-	private Stats _stats;
+	private EnemyStats _stats;
+
+	public Sprite2D sprite2D;
+	public Sprite2D arrow;
+	public StatsUI statsUI;
+
+	public EnemyActionPicker enemyActionPicker;
+	public EnemyAction currentAction {
+		get => _currentAction;
+		set => SetCurrentAction(value);
+	}
+	private EnemyAction _currentAction = null;
 
 	public override void _Ready()
 	{
@@ -27,16 +34,54 @@ public partial class Enemy : Area2D
 		AreaExited += OnAreaExited;
 	}
 
-	public void SetStats(Stats value)
+	public void SetCurrentAction(EnemyAction value)
 	{
-		_stats = value.CreateInstance() as Stats;
+		_currentAction = value;
+	}
+
+	public void SetEnemyStats(EnemyStats value)
+	{
+		_stats = value.CreateInstance();
 
 		if (!value.IsConnected(Stats.SignalName.StatsChanged, Callable.From(UpdateStats)))
 		{
 			_stats.StatsChanged += UpdateStats;
+			_stats.StatsChanged += UpdateAction;
 		}
 
 		UpdateEnemy();
+	}
+
+	public void UpdateStats()
+	{
+		statsUI.UpdateStats(stats);
+	}
+
+	public void SetupAI()
+	{
+		enemyActionPicker?.QueueFree();
+
+		EnemyActionPicker newActionPicker = stats.ai.Instantiate() as EnemyActionPicker;
+		AddChild(newActionPicker);
+		enemyActionPicker = newActionPicker;
+		enemyActionPicker.enemy = this;
+	}
+
+	public void UpdateAction()
+	{
+		if (enemyActionPicker == null) return;
+
+		if (_currentAction == null)
+		{
+			currentAction = enemyActionPicker.GetAction();
+			return;
+		}
+
+		EnemyAction newConditionalAction = enemyActionPicker.GetFirstConditionalAction();
+		if (newConditionalAction != null && currentAction != newConditionalAction)
+		{
+			currentAction = newConditionalAction;
+		}
 	}
 
 	public async void UpdateEnemy()
@@ -46,13 +91,19 @@ public partial class Enemy : Area2D
 
 		sprite2D.Texture = stats.art;
 		arrow.Position = Vector2.Right * (sprite2D.GetRect().Size.X / 2 + ARROW_OFFSET); // Arrow is X pixels to the right of the sprite
+		SetupAI();
+		UpdateStats();
 
 		UpdateStats();
 	}
 
-	public void UpdateStats()
+	public void DoTurn()
 	{
-		statsUI.UpdateStats(stats);
+		stats.block = 0;
+
+		if (currentAction == null) return;
+
+		currentAction.PerformAction();
 	}
 
 	public void TakeDamage(int damage)

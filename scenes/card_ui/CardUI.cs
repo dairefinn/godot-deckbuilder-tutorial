@@ -11,9 +11,6 @@ public partial class CardUI : Control
 	public static readonly StyleBox DRAG_STYLEBOX = ResourceLoader.Load<StyleBox>("res://scenes/card_ui/card_dragging_stylebox.tres");
 	public static readonly StyleBox HOVER_STYLEBOX = ResourceLoader.Load<StyleBox>("res://scenes/card_ui/card_hover_stylebox.tres");
 
-	private Events globalEvents;
-
-
     [Signal] public delegate void ReparentRequestedEventHandler(CardUI whichCardUI);
 
 	[Export] public Card card {
@@ -46,7 +43,6 @@ public partial class CardUI : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		globalEvents = GetNode<Events>("/root/Events");
 		panel = GetNode<Panel>("Panel");
 		cost = GetNode<Label>("Cost");
 		icon = GetNode<TextureRect>("Icon");
@@ -59,8 +55,8 @@ public partial class CardUI : Control
 		dropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
 		dropPointDetector.AreaExited += OnDropPointDetectorAreaExited;
 
-		globalEvents.CardDragStarted += OnCardDragOrAimingStarted;
-		globalEvents.CardDragEnded += OnCardDragOrAimingEnded;
+		Events.Instance.CardDragStarted += OnCardDragOrAimingStarted;
+		Events.Instance.CardDragEnded += OnCardDragOrAimingEnded;
 
 		cardStateMachine.Init(this);
 	}
@@ -118,7 +114,7 @@ public partial class CardUI : Control
 	{
 		if (card == null) return;
 
-		card.Play(targets, charStats, globalEvents);
+		card.Play(targets, charStats);
 
 		QueueFree();
 	}

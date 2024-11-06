@@ -54,6 +54,7 @@ public partial class Player : Node2D
 
 		if (stats.health <= 0)
 		{
+			Events.Instance.EmitSignal(Events.SignalName.PlayerDied);
 			QueueFree(); // Remove the player from the scene
 		}
 	}

@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://b3qo7tr1oh38q"]
+[gd_scene load_steps=16 format=3 uid="uid://b3qo7tr1oh38q"]
 
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="1_ofalh"]
 [ext_resource type="Script" path="res://scenes/battle/Battle.cs" id="1_tioa5"]
 [ext_resource type="PackedScene" uid="uid://cgo0oqohl5o15" path="res://scenes/enemy/enemy.tscn" id="2_3dodu"]
 [ext_resource type="Script" path="res://scenes/ui/Hand.cs" id="2_5sr4t"]
-[ext_resource type="Resource" uid="uid://bk2iiqgu4crxk" path="res://enemies/crab/TestEnemy.tres" id="3_5mkcd"]
 [ext_resource type="PackedScene" uid="uid://bqs6ju4bb6ndn" path="res://scenes/card_target_selector/card_target_selector.tscn" id="3_wkkwo"]
 [ext_resource type="PackedScene" uid="uid://w6mughtfcxip" path="res://scenes/player/player.tscn" id="3_ycek3"]
 [ext_resource type="Resource" uid="uid://m2lvkcop0w2i" path="res://characters/warrior/Warrior.tres" id="4_oqmqk"]
+[ext_resource type="Script" path="res://scenes/enemy/EnemyHandler.cs" id="4_pk0sw"]
+[ext_resource type="Resource" uid="uid://cqfgpbbkvckaa" path="res://enemies/crab/CrabEnemy.tres" id="5_cu3md"]
 [ext_resource type="Script" path="res://scenes/ui/BattleUI.cs" id="7_2np4j"]
 [ext_resource type="Script" path="res://scenes/player/PlayerHandler.cs" id="8_uteb0"]
 [ext_resource type="PackedScene" uid="uid://cchluq0llaa4p" path="res://scenes/ui/mana_ui.tscn" id="11_64i1k"]
@@ -36,9 +37,12 @@ position = Vector2(128, 50)
 shape = SubResource("RectangleShape2D_2jsft")
 debug_color = Color(0, 0.595, 0.7, 0.180392)
 
-[node name="Enemy" parent="." instance=ExtResource("2_3dodu")]
+[node name="EnemyHandler" type="Node2D" parent="."]
+script = ExtResource("4_pk0sw")
+
+[node name="Enemy" parent="EnemyHandler" instance=ExtResource("2_3dodu")]
 position = Vector2(193, 83)
-stats = ExtResource("3_5mkcd")
+stats = ExtResource("5_cu3md")
 
 [node name="Player" parent="." instance=ExtResource("3_ycek3")]
 position = Vector2(44, 81)

@@ -58,9 +58,9 @@ public partial class Card : Resource
         }
     }
 
-    public void Play(List<Node> targets, CharacterStats characterStats, Events globalEvents) // NOTE: Passing globalEvents as a parameter is a workaround for the way global variables work (or don't) in C#
+    public void Play(List<Node> targets, CharacterStats characterStats)
     {
-        globalEvents.EmitSignal(Events.SignalName.CardPlayed, this);
+        Events.Instance.EmitSignal(Events.SignalName.CardPlayed, this);
         characterStats.mana -= cost;
 
         if (GetIsSingleTargeted())

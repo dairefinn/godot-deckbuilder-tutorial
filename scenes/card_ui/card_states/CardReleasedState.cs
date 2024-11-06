@@ -6,14 +6,6 @@ public partial class CardReleasedState : CardState
 {
 
 	public bool played;
-	
-	private Events globalEvents;
-
-
-    public override void _Ready()
-    {
-        globalEvents = GetNode<Events>("/root/Events");
-    }
 
 	public override void Enter()
 	{
@@ -23,7 +15,7 @@ public partial class CardReleasedState : CardState
 		{
 			played = true;
 			cardUI.Play();
-			globalEvents.EmitSignal(Events.SignalName.TooltipHideRequested);
+			Events.Instance.EmitSignal(Events.SignalName.TooltipHideRequested);
 		}
 	}
 

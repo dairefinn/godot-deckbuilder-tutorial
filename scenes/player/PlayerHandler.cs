@@ -9,17 +9,13 @@ public partial class PlayerHandler : Node
 	const float HAND_DRAW_INTERVAL = 0.25f;
 	const float HAND_DISCARD_INTERVAL = 0.25f;
 
-	private Events globalEvents;
-
-
 	[Export] public Hand hand;
 
 	public CharacterStats character;
 
 	public override void _Ready()
 	{
-		globalEvents = GetNode<Events>("/root/Events");
-		globalEvents.CardPlayed += OnCardPlayed;
+		Events.Instance.CardPlayed += OnCardPlayed;
 	}
 
 	public void StartBattle(CharacterStats stats)
@@ -57,7 +53,7 @@ public partial class PlayerHandler : Node
 		}
 
 		tween.Finished += () => {
-			globalEvents.EmitSignal(Events.SignalName.PlayerHandDiscarded);
+			Events.Instance.EmitSignal(Events.SignalName.PlayerHandDiscarded);
 		};
 	}
 
@@ -71,7 +67,7 @@ public partial class PlayerHandler : Node
 		}
 
 		tween.Finished += () => {
-			globalEvents.EmitSignal(Events.SignalName.PlayerHandDrawn);
+			Events.Instance.EmitSignal(Events.SignalName.PlayerHandDrawn);
 		};
 	}
 

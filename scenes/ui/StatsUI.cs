@@ -20,6 +20,9 @@ public partial class StatsUI : HBoxContainer
 
 	public void UpdateStats(Stats stats)
 	{
+		if (!IsInstanceValid(blockLabel)) return;
+		if (!IsInstanceValid(healthLabel)) return;
+
 		blockLabel.Text = stats.block.ToString();
 		healthLabel.Text = stats.health.ToString();
 

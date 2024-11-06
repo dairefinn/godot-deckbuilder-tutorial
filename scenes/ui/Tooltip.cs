@@ -12,22 +12,17 @@ public partial class Tooltip : PanelContainer
 
 	private Tween tween;
 	private bool isVisible = false;
-	
-	private Events globalEvents;
-
 
 	public override void _Ready()
 	{
-        globalEvents = GetNode<Events>("/root/Events");
-
 		tooltipIcon = GetNode<TextureRect>("%TooltipIcon");
 		tooltipTextLabel = GetNode<RichTextLabel>("%TooltipText");
 
 		Modulate = Colors.Transparent;
 		Hide();
 
-		globalEvents.CardTooltipRequested += ShowTooltip;
-		globalEvents.TooltipHideRequested += HideTooltip;
+		Events.Instance.CardTooltipRequested += ShowTooltip;
+		Events.Instance.TooltipHideRequested += HideTooltip;
 	}
 
 	public void ShowTooltip(Texture2D icon, string text)

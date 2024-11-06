@@ -7,14 +7,6 @@ public partial class CardAimingState : CardState
 
 	const int MOUSE_Y_SNAPBACK_THRESHOLD = 138;
 
-	private Events globalEvents;
-
-
-    public override void _Ready()
-    {
-		globalEvents = GetNode<Events>("/root/Events");
-    }
-
     public override void Enter()
 	{
 		cardUI.targets.Clear();
@@ -25,12 +17,12 @@ public partial class CardAimingState : CardState
 		cardUI.AnimateToPosition(cardUI.parent.GlobalPosition + offset, 0.2f);
 
 		cardUI.dropPointDetector.Monitoring = false;
-		globalEvents.EmitSignal(Events.SignalName.CardAimStarted, cardUI);
+		Events.Instance.EmitSignal(Events.SignalName.CardAimStarted, cardUI);
 	}
 
 	public override void Exit()
 	{
-		globalEvents.EmitSignal(Events.SignalName.CardAimEnded, cardUI);
+		Events.Instance.EmitSignal(Events.SignalName.CardAimEnded, cardUI);
 	}
 
     public override void OnInput(InputEvent @event)
