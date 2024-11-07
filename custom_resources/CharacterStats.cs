@@ -36,6 +36,16 @@ public partial class CharacterStats : Stats
         return mana > card.cost;
     }
 
+    public override void TakeDamage(int damage)
+    {
+        int initialHealth = health;
+        base.TakeDamage(damage);
+        if (initialHealth > health)
+        {
+            Events.Instance.EmitSignal(Events.SignalName.PlayerHit);
+        }
+    }
+
     public new CharacterStats CreateInstance()
     {
         CharacterStats instance = Duplicate() as CharacterStats;

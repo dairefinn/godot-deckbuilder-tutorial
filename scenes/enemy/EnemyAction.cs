@@ -11,6 +11,7 @@ public partial class EnemyAction : Node
         CHANCE_BASED
     }
 
+    [Export] public Intent intent;
     [Export] public Type type;
     [Export(PropertyHint.Range, "0,100,")] public float chanceWeight = 0.0f;
 

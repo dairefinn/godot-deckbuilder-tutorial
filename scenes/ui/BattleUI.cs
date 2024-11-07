@@ -25,12 +25,12 @@ public partial class BattleUI : CanvasLayer
 		endTurnButton.Pressed += OnEndTurnButtonPressed;
     }
 
-	private void OnPlayerHandDrawn()
+	public void OnPlayerHandDrawn()
 	{
 		endTurnButton.Disabled = false;
 	}
 
-	private void OnEndTurnButtonPressed()
+	public void OnEndTurnButtonPressed()
 	{
 		endTurnButton.Disabled = true;
 		Events.Instance.EmitSignal(Events.SignalName.PlayerTurnEnded);

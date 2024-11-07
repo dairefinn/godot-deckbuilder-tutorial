@@ -11,13 +11,6 @@ public partial class Hand : HBoxContainer
 
 	private PackedScene cardUIResource = ResourceLoader.Load<PackedScene>("res://scenes/card_ui/card_ui.tscn");
 
-	public int cardsPlayedThisTurn = 0;
-	
-	public override void _Ready()
-	{
-		Events.Instance.CardPlayed += OnCardPlayed;
-	}
-
 	public void AddCard(Card card)
 	{
 		CardUI newCardUI = cardUIResource.Instantiate() as CardUI;
@@ -41,16 +34,11 @@ public partial class Hand : HBoxContainer
 		}
 	}
 
-	public void OnCardPlayed(Card _card)
-	{
-		cardsPlayedThisTurn++;
-	}
-
 	private void OnReparentRequested(CardUI child)
 	{
 		child.disabled = true;
 		child.Reparent(this);
-		int newIndex = Math.Clamp(child.originalIndex - cardsPlayedThisTurn, 0, GetChildCount());
+		int newIndex = Math.Clamp(child.originalIndex, 0, GetChildCount());
 		CallDeferred(MethodName.MoveChild, child, newIndex);
 		CallDeferred(MethodName.EnableCard, child);
 	}

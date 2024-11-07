@@ -50,6 +50,7 @@ public partial class Battle : Node2D
 		if (enemyHandler.GetChildCount() == 0)
 		{
 			GD.Print("Victory!");
+			battleUI.OnEndTurnButtonPressed();
 		}
 	}
 

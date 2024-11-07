@@ -45,10 +45,8 @@ public partial class PlayerHandler : Node
 		Tween tween = CreateTween();
 		foreach (CardUI cardUI in hand.GetChildren().Cast<CardUI>())
 		{
-			tween.TweenCallback(Callable.From(() => {
-				character.discard.AddCard(cardUI.card);
-				hand.DiscardCard(cardUI);
-			}));
+			tween.TweenCallback(Callable.From(() => character.discard.AddCard(cardUI.card)));
+			tween.TweenCallback(Callable.From(() => hand.DiscardCard(cardUI)));
 			tween.TweenInterval(HAND_DISCARD_INTERVAL);
 		}
 

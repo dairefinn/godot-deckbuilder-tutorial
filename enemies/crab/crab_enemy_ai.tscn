@@ -1,22 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://kw5crn11iuwp"]
+[gd_scene load_steps=12 format=3 uid="uid://kw5crn11iuwp"]
 
 [ext_resource type="Script" path="res://scenes/enemy/EnemyActionPicker.cs" id="1_4t80m"]
 [ext_resource type="Script" path="res://enemies/crab/CrabAttackAction.cs" id="2_6507r"]
 [ext_resource type="Script" path="res://enemies/crab/CrabBlockAction.cs" id="3_g5d3w"]
+[ext_resource type="Texture2D" uid="uid://bfvi02kojsa00" path="res://art/tile_0103.png" id="3_knrq2"]
+[ext_resource type="Script" path="res://custom_resources/Intent.cs" id="4_2w6xi"]
 [ext_resource type="Script" path="res://enemies/crab/CrabMegaBlockAction.cs" id="4_x83al"]
+[ext_resource type="Texture2D" uid="uid://bi6pfjs32f820" path="res://art/tile_0101.png" id="6_5370r"]
+[ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="8_sf4yv"]
+
+[sub_resource type="Resource" id="Resource_v8x0n"]
+script = ExtResource("4_2w6xi")
+number = "7"
+icon = ExtResource("3_knrq2")
+
+[sub_resource type="Resource" id="Resource_pveub"]
+script = ExtResource("4_2w6xi")
+number = ""
+icon = ExtResource("6_5370r")
+
+[sub_resource type="Resource" id="Resource_hsp40"]
+script = ExtResource("4_2w6xi")
+number = ""
+icon = ExtResource("8_sf4yv")
 
 [node name="EnemyActionPicker" type="Node"]
 script = ExtResource("1_4t80m")
 
 [node name="AttackAction" type="Node" parent="."]
 script = ExtResource("2_6507r")
+intent = SubResource("Resource_v8x0n")
 type = 1
 chanceWeight = 1.0
 
 [node name="BlockAction" type="Node" parent="."]
 script = ExtResource("3_g5d3w")
+intent = SubResource("Resource_pveub")
 type = 1
 chanceWeight = 1.0
 
 [node name="MegaBlockAction" type="Node" parent="."]
 script = ExtResource("4_x83al")
+intent = SubResource("Resource_hsp40")

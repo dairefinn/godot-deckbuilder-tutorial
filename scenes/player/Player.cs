@@ -5,6 +5,8 @@ namespace DeckBuilder;
 public partial class Player : Node2D
 {
 
+	private Material WHITE_SPRITE_MATERIAL = GD.Load<Material>("res://art/white_sprite_material.tres");
+
 	public Sprite2D sprite2D;
 	public StatsUI statsUI;
 	
@@ -50,12 +52,21 @@ public partial class Player : Node2D
 	{
 		if (stats.health <= 0) return;
 
-		stats.TakeDamage(damage);
+		sprite2D.Material = WHITE_SPRITE_MATERIAL;
 
-		if (stats.health <= 0)
-		{
-			Events.Instance.EmitSignal(Events.SignalName.PlayerDied);
-			QueueFree(); // Remove the player from the scene
-		}
+		Tween tween = CreateTween();
+		tween.TweenCallback(Callable.From(() => Shaker.Instance.Shake(this, 16f, 0.15f)));
+		tween.TweenCallback(Callable.From(() => stats.TakeDamage(damage)));
+		tween.TweenInterval(0.17f);
+		
+		tween.Finished += () => {
+			sprite2D.Material = null;
+
+			if (stats.health <= 0)
+			{
+				Events.Instance.EmitSignal(Events.SignalName.PlayerDied);
+				QueueFree(); // Remove the enemy from the scene
+			}
+		};
 	}
 }

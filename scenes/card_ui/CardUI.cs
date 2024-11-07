@@ -27,7 +27,7 @@ public partial class CardUI : Control
     public Area2D dropPointDetector;
 	public CardStateMachine cardStateMachine;
 	public List<Node> targets = new();
-	public int originalIndex;
+	public int originalIndex = 0;
 
 	public Control parent;
 	public Tween tween;
@@ -49,8 +49,6 @@ public partial class CardUI : Control
 
 		dropPointDetector = GetNode<Area2D>("DropPointDetector");
 		cardStateMachine = GetNode<CardStateMachine>("CardStateMachine");
-
-		originalIndex = GetIndex();
 
 		dropPointDetector.AreaEntered += OnDropPointDetectorAreaEntered;
 		dropPointDetector.AreaExited += OnDropPointDetectorAreaExited;

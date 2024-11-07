@@ -34,7 +34,7 @@ public partial class Stats : Resource
         EmitSignal(Stats.SignalName.StatsChanged);
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (damage < 0) return;
 

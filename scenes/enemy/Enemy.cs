@@ -6,6 +6,7 @@ public partial class Enemy : Area2D
 {
 
 	const int ARROW_OFFSET = 5;
+	private Material WHITE_SPRITE_MATERIAL = GD.Load<Material>("res://art/white_sprite_material.tres");
 
 	[Export] public EnemyStats stats {
 		get => _stats;
@@ -16,6 +17,7 @@ public partial class Enemy : Area2D
 	public Sprite2D sprite2D;
 	public Sprite2D arrow;
 	public StatsUI statsUI;
+	public IntentUI intentUI;
 
 	public EnemyActionPicker enemyActionPicker;
 	public EnemyAction currentAction {
@@ -27,8 +29,9 @@ public partial class Enemy : Area2D
 	public override void _Ready()
 	{
 		sprite2D = GetNode<Sprite2D>("Sprite2D");
-		statsUI = GetNode<StatsUI>("StatsUI");
 		arrow = GetNode<Sprite2D>("Arrow");
+		statsUI = GetNode<StatsUI>("StatsUI");
+		intentUI = GetNode<IntentUI>("IntentUI");
 
 		AreaEntered += OnAreaEntered;
 		AreaExited += OnAreaExited;
@@ -37,6 +40,11 @@ public partial class Enemy : Area2D
 	public void SetCurrentAction(EnemyAction value)
 	{
 		_currentAction = value;
+
+		if (currentAction != null)
+		{
+			intentUI?.UpdateIntent(currentAction.intent);
+		}
 	}
 
 	public void SetEnemyStats(EnemyStats value)
@@ -110,12 +118,20 @@ public partial class Enemy : Area2D
 	{
 		if (stats.health <= 0) return;
 
-		stats.TakeDamage(damage);
+		sprite2D.Material = WHITE_SPRITE_MATERIAL;
 
-		if (stats.health <= 0)
-		{
-			QueueFree(); // Remove the enemy from the scene
-		}
+		Tween tween = CreateTween();
+		tween.TweenCallback(Callable.From(() => Shaker.Instance.Shake(this, 16f, 0.15f)));
+		tween.TweenCallback(Callable.From(() => stats.TakeDamage(damage)));
+		tween.TweenInterval(0.17f);
+		
+		tween.Finished += () => {
+			sprite2D.Material = null;
+			if (stats.health <= 0)
+			{
+				QueueFree(); // Remove the enemy from the scene
+			}
+		};
 	}
 
 	public void OnAreaEntered(Area2D area)
