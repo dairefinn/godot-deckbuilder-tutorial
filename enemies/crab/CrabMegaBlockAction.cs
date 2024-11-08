@@ -14,8 +14,10 @@ public partial class CrabMegaBlockAction : EnemyAction
     {
         base.PerformAction();
 
-        BlockEffect blockEffect = new() {
-            amount = block
+        BlockEffect blockEffect = new()
+        {
+            amount = block,
+            sound = sound
         };
         blockEffect.Execute(new() { target });
 

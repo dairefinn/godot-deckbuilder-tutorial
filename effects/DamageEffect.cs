@@ -17,12 +17,14 @@ public partial class DamageEffect : Effect
             if (target is Enemy e)
             {
                 e.TakeDamage(amount);
+                SoundPlayer.TryPlayOnInstance("SFXPlayer", sound, true);
                 continue;
             }
 
             if (target is Player p)
             {
                 p.TakeDamage(amount);
+                SoundPlayer.TryPlayOnInstance("SFXPlayer", sound, true);
                 continue;
             }
         }

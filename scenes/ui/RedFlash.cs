@@ -20,6 +20,7 @@ public partial class RedFlash : CanvasLayer
 	public void OnPlayerHit()
 	{
 		SetRectAlpha(0.2f);
+		if (!IsInstanceValid(timer)) return;
 		timer.Start();
 	}
 
@@ -30,6 +31,7 @@ public partial class RedFlash : CanvasLayer
 
 	private void SetRectAlpha(float alpha)
 	{
+		if (!IsInstanceValid(colorRect)) return;
 		Color tempColor = colorRect.Color;
 		tempColor.A = alpha;
 		colorRect.Color = tempColor;

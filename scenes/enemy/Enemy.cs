@@ -41,9 +41,9 @@ public partial class Enemy : Area2D
 	{
 		_currentAction = value;
 
-		if (currentAction != null)
+		if (_currentAction != null)
 		{
-			intentUI?.UpdateIntent(currentAction.intent);
+			intentUI?.UpdateIntent(_currentAction.intent);
 		}
 	}
 
@@ -77,9 +77,11 @@ public partial class Enemy : Area2D
 
 	public void UpdateAction()
 	{
-		if (enemyActionPicker == null) return;
+		if (enemyActionPicker == null) {
+			return;
+		}
 
-		if (_currentAction == null)
+		if (currentAction == null)
 		{
 			currentAction = enemyActionPicker.GetAction();
 			return;
@@ -100,8 +102,6 @@ public partial class Enemy : Area2D
 		sprite2D.Texture = stats.art;
 		arrow.Position = Vector2.Right * (sprite2D.GetRect().Size.X / 2 + ARROW_OFFSET); // Arrow is X pixels to the right of the sprite
 		SetupAI();
-		UpdateStats();
-
 		UpdateStats();
 	}
 

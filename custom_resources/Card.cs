@@ -28,6 +28,7 @@ public partial class Card : Resource
     [Export] public Type type;
     [Export] public Target target;
     [Export] public int cost;
+    [Export] public AudioStream sound;
 
     [ExportGroup("Card visuals")]
     [Export] public Texture2D icon;

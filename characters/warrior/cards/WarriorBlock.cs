@@ -12,6 +12,7 @@ public partial class WarriorBlock : Card
         {
             amount = 5
         };
+        blockEffect.sound = sound;
         blockEffect.Execute(targets);
     }
 

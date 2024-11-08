@@ -17,12 +17,14 @@ public partial class BlockEffect : Effect
             if (target is Enemy e)
             {
                 e.stats.block += amount;
+                SoundPlayer.TryPlayOnInstance("SFXPlayer", sound, true);
                 continue;
             }
 
             if (target is Player p)
             {
                 p.stats.block += amount;
+                SoundPlayer.TryPlayOnInstance("SFXPlayer", sound, true);                
                 continue;
             }
         }

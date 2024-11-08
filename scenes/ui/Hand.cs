@@ -28,8 +28,11 @@ public partial class Hand : HBoxContainer
 
 	public void DisableHand()
 	{
+		if (!IsInstanceValid(this)) return;
+
 		foreach (CardUI card in GetChildren().Cast<CardUI>())
 		{
+			if (!IsInstanceValid(card)) continue;
 			card.disabled = true;
 		}
 	}

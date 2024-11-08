@@ -12,6 +12,7 @@ public partial class WarriorAxeAttack : Card
         {
             amount = 6
         };
+        damageEffect.sound = sound;
         damageEffect.Execute(targets);
     }
 

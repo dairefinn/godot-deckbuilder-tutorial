@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://v7nd6shus22r"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://v7nd6shus22r"]
 
 [ext_resource type="Texture2D" uid="uid://ck1t4hdip6xrl" path="res://art/tile_0119.png" id="1_4hs3a"]
 [ext_resource type="Script" path="res://characters/warrior/cards/WarriorAxeAttack.cs" id="2_qhqp7"]
+[ext_resource type="AudioStream" uid="uid://b1vpjjmi5cj3n" path="res://art/axe.ogg" id="3_5qmod"]
 
 [resource]
 script = ExtResource("2_qhqp7")
@@ -9,5 +10,6 @@ id = "warrior_axe_attack"
 type = 0
 target = 1
 cost = 1
+sound = ExtResource("3_5qmod")
 icon = ExtResource("1_4hs3a")
 tooltipText = "[center]Deal [color=\"ff0000\"]6[/color] damage.[/center]"

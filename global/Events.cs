@@ -1,5 +1,6 @@
 namespace DeckBuilder;
 
+using System;
 using Godot;
 
 public partial class Events : Node
@@ -11,23 +12,25 @@ public partial class Events : Node
 	{
 		Instance = this;
 
-		CardDragStarted += (cardUI) => { GD.Print("CardDragStarted: ", cardUI); };
-		CardDragEnded += (cardUI) => { GD.Print("CardDragEnded: ", cardUI); };
-		CardAimStarted += (cardUI) => { GD.Print("CardAimStarted: ", cardUI); };
-		CardAimEnded += (cardUI) => { GD.Print("CardAimEnded: ", cardUI); };
-		CardPlayed += (card) => { GD.Print("CardPlayed: ", card); };
+		// CardDragStarted += (cardUI) => { GD.Print("CardDragStarted: ", cardUI); };
+		// CardDragEnded += (cardUI) => { GD.Print("CardDragEnded: ", cardUI); };
+		// CardAimStarted += (cardUI) => { GD.Print("CardAimStarted: ", cardUI); };
+		// CardAimEnded += (cardUI) => { GD.Print("CardAimEnded: ", cardUI); };
+		// CardPlayed += (card) => { GD.Print("CardPlayed: ", card); };
 		
-		CardTooltipRequested += (icon, text) => { GD.Print("CardTooltipRequested: ", icon, text); };
-		TooltipHideRequested += () => { GD.Print("TooltipHideRequested"); };
+		// CardTooltipRequested += (icon, text) => { GD.Print("CardTooltipRequested: ", icon, text); };
+		// TooltipHideRequested += () => { GD.Print("TooltipHideRequested"); };
 
-		PlayerHandDrawn += () => { GD.Print("PlayerHandDrawn"); };
-		PlayerHandDiscarded += () => { GD.Print("PlayerHandDiscarded"); };
-		PlayerTurnEnded += () => { GD.Print("PlayerTurnEnded"); };
-		PlayerDied += () => { GD.Print("PlayerDied"); };
-		PlayerHit += () => { GD.Print("PlayerHit"); };
+		// PlayerHandDrawn += () => { GD.Print("PlayerHandDrawn"); };
+		// PlayerHandDiscarded += () => { GD.Print("PlayerHandDiscarded"); };
+		// PlayerTurnEnded += () => { GD.Print("PlayerTurnEnded"); };
+		// PlayerDied += () => { GD.Print("PlayerDied"); };
+		// PlayerHit += () => { GD.Print("PlayerHit"); };
 
-		EnemyActionCompleted += (enemy) => { GD.Print("EnemyActionCompleted: ", enemy); };
-		EnemyTurnEnded += () => { GD.Print("EnemyTurnEnded"); };
+		// EnemyActionCompleted += (enemy) => { GD.Print("EnemyActionCompleted: ", enemy); };
+		// EnemyTurnEnded += () => { GD.Print("EnemyTurnEnded"); };
+
+		// BattleOverScreenRequested += (text, type) => { GD.Print("BattleOverScreenRequested: ", text, type); };
 	}
 
 	// Card related events
@@ -57,5 +60,9 @@ public partial class Events : Node
 
 	[Signal] public delegate void EnemyActionCompletedEventHandler(Enemy enemy);
 	[Signal] public delegate void EnemyTurnEndedEventHandler();
+
+	// Battle related events
+
+	[Signal] public delegate void BattleOverScreenRequestedEventHandler(string text, BattleOverPanel.Type type);
 
 }

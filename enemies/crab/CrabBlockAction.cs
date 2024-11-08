@@ -1,5 +1,6 @@
 namespace DeckBuilder;
 
+using System.Collections.Generic;
 using Godot;
 
 public partial class CrabBlockAction : EnemyAction
@@ -13,9 +14,11 @@ public partial class CrabBlockAction : EnemyAction
 
         BlockEffect blockEffect = new()
         {
-            amount = block
+            amount = block,
+            sound = sound
         };
-        blockEffect.Execute(new() { enemy });
+        List<Node> enemyArray = new() { enemy };
+        blockEffect.Execute(enemyArray);
 
         GetTree().CreateTimer(0.6f, false).Timeout += () => {
             Events.Instance.EmitSignal(Events.SignalName.EnemyActionCompleted, enemy);

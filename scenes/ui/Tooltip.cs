@@ -27,6 +27,10 @@ public partial class Tooltip : PanelContainer
 
 	public void ShowTooltip(Texture2D icon, string text)
 	{
+		if (!IsInstanceValid(this)) return;
+		if (!IsInstanceValid(tooltipIcon)) return;
+		if (!IsInstanceValid(tooltipTextLabel)) return;
+
 		isVisible = true;
 		tween?.Kill();
 
@@ -40,6 +44,7 @@ public partial class Tooltip : PanelContainer
 
 	public void HideTooltip()
 	{
+		if (!IsInstanceValid(this)) return;
 		isVisible = false;
 		tween?.Kill();
 

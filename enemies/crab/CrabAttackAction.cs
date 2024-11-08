@@ -17,7 +17,8 @@ public partial class CrabAttackAction : EnemyAction
         Vector2 end = target.GlobalPosition + Vector2.Right * 32;
         DamageEffect damageEffect = new()
         {
-            amount = damage
+            amount = damage,
+            sound = sound
         };
         List<Node> targetArray = new() { target };
 

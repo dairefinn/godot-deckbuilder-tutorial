@@ -14,6 +14,7 @@ public partial class EnemyAction : Node
     [Export] public Intent intent;
     [Export] public Type type;
     [Export(PropertyHint.Range, "0,100,")] public float chanceWeight = 0.0f;
+    [Export] public AudioStream sound;
 
     public float accumulatedWeight = 0.0f;
 

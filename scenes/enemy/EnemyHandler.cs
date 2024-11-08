@@ -22,10 +22,12 @@ public partial class EnemyHandler : Node2D
 
 	public void StartTurn()
 	{
+		if (!IsInstanceValid(this)) return;
 		if (GetChildCount() == 0) return;
 
 		Node firstEnemyNode = GetChild(0);
 		if (firstEnemyNode == null) return;
+		if (!IsInstanceValid(firstEnemyNode)) return;
 		if (firstEnemyNode is not Enemy firstEnemy) return;
 		firstEnemy.DoTurn();
 	}

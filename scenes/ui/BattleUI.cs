@@ -27,6 +27,7 @@ public partial class BattleUI : CanvasLayer
 
 	public void OnPlayerHandDrawn()
 	{
+		if (!IsInstanceValid(endTurnButton)) return;
 		endTurnButton.Disabled = false;
 	}
 

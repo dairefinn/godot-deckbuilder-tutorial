@@ -6,6 +6,7 @@ public partial class Battle : Node2D
 {
 
 	[Export] public CharacterStats charStats;
+	[Export] public AudioStream music;
 
 	public BattleUI battleUI;
 	public PlayerHandler playerHandler;
@@ -35,6 +36,8 @@ public partial class Battle : Node2D
 
 	public void StartBattle(CharacterStats stats)
 	{
+		GetTree().Paused = false;
+		SoundPlayer.TryPlayOnInstance("MusicPlayer", music, true);
 		enemyHandler.ResetEnemyActions();
 		playerHandler.StartBattle(stats);
 	}
@@ -49,14 +52,14 @@ public partial class Battle : Node2D
 	{
 		if (enemyHandler.GetChildCount() == 0)
 		{
-			GD.Print("Victory!");
-			battleUI.OnEndTurnButtonPressed();
+			// battleUI.OnEndTurnButtonPressed();
+			Events.Instance.EmitSignal(Events.SignalName.BattleOverScreenRequested, "Victory!", (int)BattleOverPanel.Type.WIN);
 		}
 	}
 
 	public void OnPlayerDied()
 	{
-		GD.Print("Game Over!");
+		Events.Instance.EmitSignal(Events.SignalName.BattleOverScreenRequested, "You lose!", (int)BattleOverPanel.Type.LOSE);
 	}
 
 }
