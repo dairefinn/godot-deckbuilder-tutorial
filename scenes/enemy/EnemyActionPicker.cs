@@ -76,7 +76,7 @@ public partial class EnemyActionPicker : Node
 		{
             if (child is not EnemyAction action) continue;
             if (action.type != EnemyAction.Type.CHANCE_BASED) continue;
-			if (roll <= action.accumulatedWeight) break;
+			if (roll > action.accumulatedWeight) continue;
 			return action;
 		}
 
