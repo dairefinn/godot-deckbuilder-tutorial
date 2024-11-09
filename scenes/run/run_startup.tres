@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RunStartup" load_steps=2 format=3 uid="uid://ce0cjyct7jn0s"]
+
+[ext_resource type="Script" path="res://custom_resources/RunStartup.cs" id="1_aqvkb"]
+
+[resource]
+script = ExtResource("1_aqvkb")
+type = 0

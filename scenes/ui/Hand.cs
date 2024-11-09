@@ -9,7 +9,7 @@ public partial class Hand : HBoxContainer
 
 	[Export] public CharacterStats charStats;
 
-	private PackedScene cardUIResource = ResourceLoader.Load<PackedScene>("res://scenes/card_ui/card_ui.tscn");
+	private PackedScene cardUIResource = GD.Load<PackedScene>("res://scenes/card_ui/card_ui.tscn");
 
 	public void AddCard(Card card)
 	{

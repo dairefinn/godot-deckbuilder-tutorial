@@ -6,6 +6,12 @@ using Godot;
 public partial class CharacterStats : Stats
 {
 
+    [ExportGroup("Visuals")]
+    [Export] public string characterName;
+    [Export(PropertyHint.MultilineText)] public string description;
+    [Export] public Texture2D portrait;
+
+    [ExportGroup("Gameplay Data")]
     [Export] public CardPile startingDeck;
     [Export] public int cardsPerTurn;
     [Export] public int maxMana;

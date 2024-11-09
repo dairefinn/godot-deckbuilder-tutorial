@@ -64,5 +64,26 @@ public partial class Events : Node
 	// Battle related events
 
 	[Signal] public delegate void BattleOverScreenRequestedEventHandler(string text, BattleOverPanel.Type type);
+	[Signal] public delegate void BattleWonEventHandler();
+
+	// Map related events
+
+	[Signal] public delegate void MapExitedEventHandler();
+
+	// Shop related events
+
+	[Signal] public delegate void ShopExitedEventHandler();
+
+	// Campfire related events
+
+	[Signal] public delegate void CampfireExitedEventHandler();
+
+	// Battle reward related events
+
+	[Signal] public delegate void BattleRewardExitedEventHandler();
+
+	// Treasure room related events
+
+	[Signal] public delegate void TreasureRoomExitedEventHandler();
 
 }

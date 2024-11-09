@@ -7,9 +7,9 @@ using Godot;
 public partial class CardUI : Control
 {
 
-	public static readonly StyleBox BASE_STYLEBOX = ResourceLoader.Load<StyleBox>("res://scenes/card_ui/card_base_stylebox.tres");
-	public static readonly StyleBox DRAG_STYLEBOX = ResourceLoader.Load<StyleBox>("res://scenes/card_ui/card_dragging_stylebox.tres");
-	public static readonly StyleBox HOVER_STYLEBOX = ResourceLoader.Load<StyleBox>("res://scenes/card_ui/card_hover_stylebox.tres");
+	public static readonly StyleBox BASE_STYLEBOX = GD.Load<StyleBox>("res://scenes/card_ui/card_base_stylebox.tres");
+	public static readonly StyleBox DRAG_STYLEBOX = GD.Load<StyleBox>("res://scenes/card_ui/card_dragging_stylebox.tres");
+	public static readonly StyleBox HOVER_STYLEBOX = GD.Load<StyleBox>("res://scenes/card_ui/card_hover_stylebox.tres");
 
     [Signal] public delegate void ReparentRequestedEventHandler(CardUI whichCardUI);
 

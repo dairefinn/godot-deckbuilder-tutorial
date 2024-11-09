@@ -28,7 +28,7 @@ public partial class BattleOverPanel : Panel
 
 	public void OnContinueButtonPressed()
 	{
-		GetTree().Quit();
+		Events.Instance.EmitSignal(Events.SignalName.BattleWon);
 	}
 
 	public void OnRestartButtonPressed()
