@@ -40,6 +40,7 @@ public partial class Battle : Node2D
 		SoundPlayer.TryPlayOnInstance("MusicPlayer", music, true);
 		enemyHandler.ResetEnemyActions();
 		playerHandler.StartBattle(stats);
+		battleUI.InitializeCardPileUI();
 	}
 
 	public void OnEnemyTurnEnded()

@@ -15,6 +15,8 @@ public partial class Run : Node
 	[Export] RunStartup runStartup;
 
 	public Node CurrentView;
+	public CardPileOpener deckButton;
+	public CardPileView deckView;
 
 	public Button BattleButton;
 	public Button CampfireButton;
@@ -28,6 +30,8 @@ public partial class Run : Node
     public override void _Ready()
     {
 		CurrentView = GetNode<Node>("CurrentView");
+		deckButton = GetNode<CardPileOpener>("%DeckButton");
+		deckView = GetNode<CardPileView>("%DeckView");
 
 		BattleButton = GetNode<Button>("%BattleButton");
 		CampfireButton = GetNode<Button>("%CampfireButton");
@@ -56,7 +60,15 @@ public partial class Run : Node
 	public void StartRun()
 	{
 		SetupEventConnections();
+		SetupTopBar();
 		GD.Print("TODO: Procedurally generate map");
+	}
+
+	public void SetupTopBar()
+	{
+		deckButton.cardPile = Character.deck;
+		deckView.cardPile = Character.deck;
+		deckButton.Pressed += () => deckView.ShowCurrentView("Deck");
 	}
 
 	public void ChangeView(PackedScene scene)

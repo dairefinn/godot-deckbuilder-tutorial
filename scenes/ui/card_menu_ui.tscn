@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://catqmcryuejjj"]
+
+[ext_resource type="Script" path="res://scenes/ui/CardMenuUI.cs" id="1_j6jc6"]
+[ext_resource type="Theme" uid="uid://bxd1tky2mtnsb" path="res://main_theme.tres" id="1_k6mmt"]
+[ext_resource type="Resource" uid="uid://b8abwiroardbi" path="res://characters/warrior/cards/Warrior_Slash.tres" id="2_75wdl"]
+[ext_resource type="StyleBox" uid="uid://desrbw72tkn3q" path="res://scenes/card_ui/card_base_stylebox.tres" id="3_l4mln"]
+[ext_resource type="Texture2D" uid="uid://c6rme2o6dyaoj" path="res://art/tile_0104.png" id="4_eaywc"]
+
+[node name="CardMenuUI" type="CenterContainer"]
+offset_right = 25.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+script = ExtResource("1_j6jc6")
+card = ExtResource("2_75wdl")
+
+[node name="Visuals" type="Control" parent="."]
+custom_minimum_size = Vector2(25, 30)
+layout_mode = 2
+theme = ExtResource("1_k6mmt")
+
+[node name="Panel" type="Panel" parent="Visuals"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("3_l4mln")
+
+[node name="Cost" type="Label" parent="Visuals"]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 10.0
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Visuals"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_eaywc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Color" type="ColorRect" parent="Visuals"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1176, 0.28, 0.22316, 1)
+
+[node name="State" type="Label" parent="Visuals"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "state"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[connection signal="gui_input" from="Visuals" to="Visuals" method="OnGuiInput"]
+[connection signal="mouse_entered" from="Visuals" to="Visuals" method="OnMouseEntered"]
+[connection signal="mouse_exited" from="Visuals" to="Visuals" method="OnMouseExited"]

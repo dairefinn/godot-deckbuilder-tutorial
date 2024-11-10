@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfr3nijnflq7j"]
+[gd_scene load_steps=7 format=3 uid="uid://dfr3nijnflq7j"]
 
 [ext_resource type="PackedScene" uid="uid://4ujv8wporwir" path="res://scenes/map/map.tscn" id="1_k03vp"]
 [ext_resource type="Script" path="res://scenes/run/Run.cs" id="1_o0xqc"]
 [ext_resource type="Resource" uid="uid://ce0cjyct7jn0s" path="res://scenes/run/run_startup.tres" id="2_gr6ps"]
+[ext_resource type="PackedScene" uid="uid://bqgpa0bqucoso" path="res://scenes/ui/card_pile_opener.tscn" id="4_ny888"]
+[ext_resource type="Texture2D" uid="uid://chn8ij0m6ils" path="res://art/deck.png" id="5_f5k0d"]
+[ext_resource type="PackedScene" uid="uid://dmcshxpflhdva" path="res://scenes/ui/card_pile_view.tscn" id="6_h85xc"]
 
 [node name="Run" type="Node"]
 script = ExtResource("1_o0xqc")
@@ -16,6 +19,7 @@ runStartup = ExtResource("2_gr6ps")
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
+alignment = 1
 
 [node name="MapButton" type="Button" parent="DebugButtons"]
 unique_name_in_owner = true
@@ -46,3 +50,43 @@ text = "Rewards"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Campfire"
+
+[node name="TopBar" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Background" type="ColorRect" parent="TopBar"]
+custom_minimum_size = Vector2(0, 18)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="BarItems" type="HBoxContainer" parent="TopBar"]
+custom_minimum_size = Vector2(0, 18)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Placeholder" type="Control" parent="TopBar/BarItems"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeckButton" parent="TopBar/BarItems" node_paths=PackedStringArray("counter") instance=ExtResource("4_ny888")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture_normal = ExtResource("5_f5k0d")
+counter = NodePath("Counter")
+
+[node name="Counter" type="Label" parent="TopBar/BarItems/DeckButton"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 12.0
+offset_right = 5.0
+offset_bottom = 18.0
+text = "99"
+horizontal_alignment = 1
+
+[node name="DeckView" parent="TopBar" instance=ExtResource("6_h85xc")]
+unique_name_in_owner = true
+visible = false
