@@ -19,7 +19,7 @@ public partial class CrabMegaBlockAction : EnemyAction
             amount = block,
             sound = sound
         };
-        blockEffect.Execute(new() { target });
+        blockEffect.Execute(new() { enemy });
 
         GetTree().CreateTimer(0.6f, false).Timeout += () => {
             Events.Instance.EmitSignal(Events.SignalName.EnemyActionCompleted, enemy);
