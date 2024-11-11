@@ -39,7 +39,7 @@ public partial class CharacterStats : Stats
 
     public bool CanPlayCard(Card card)
     {
-        return mana > card.cost;
+        return mana >= card.cost;
     }
 
     public override void TakeDamage(int damage)
