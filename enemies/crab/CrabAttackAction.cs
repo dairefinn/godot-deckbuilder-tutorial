@@ -1,7 +1,8 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class CrabAttackAction : EnemyAction
 {
@@ -20,7 +21,7 @@ public partial class CrabAttackAction : EnemyAction
             amount = damage,
             sound = sound
         };
-        List<Node> targetArray = new() { target };
+        Array<Node> targetArray = new() { target };
 
         tween.TweenProperty(enemy, "global_position", end, 0.4f);
         tween.TweenCallback(Callable.From(() => damageEffect.Execute(targetArray)));

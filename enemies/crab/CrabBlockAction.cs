@@ -1,7 +1,8 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class CrabBlockAction : EnemyAction
 {
@@ -17,7 +18,7 @@ public partial class CrabBlockAction : EnemyAction
             amount = block,
             sound = sound
         };
-        List<Node> enemyArray = new() { enemy };
+        Array<Node> enemyArray = new() { enemy };
         blockEffect.Execute(enemyArray);
 
         GetTree().CreateTimer(0.6f, false).Timeout += () => {

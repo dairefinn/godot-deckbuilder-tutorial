@@ -19,12 +19,13 @@ public partial class CardPileOpener : TextureButton
         if (!_cardPile.IsConnected(CardPile.SignalName.CardPileSizeChanged, new Callable(this, MethodName.OnCardPileSizeChanged)))
         {
             _cardPile.CardPileSizeChanged += OnCardPileSizeChanged;
-            OnCardPileSizeChanged(_cardPile.cards.Length);
+            OnCardPileSizeChanged(_cardPile.cards.Count);
         }
     }
 
     public void OnCardPileSizeChanged(int cardsAmount)
     {
+        if (!IsInstanceValid(counter)) return;
         counter.Text = cardsAmount.ToString();
     }
 

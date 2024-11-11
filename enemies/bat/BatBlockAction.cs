@@ -1,7 +1,8 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class BatBlockAction : EnemyAction
 {
@@ -18,7 +19,7 @@ public partial class BatBlockAction : EnemyAction
 			amount = block,
 			sound = sound
 		};
-		List<Node> enemyArray = new() { enemy };
+		Array<Node> enemyArray = new() { enemy };
 		blockEffect.Execute(enemyArray);
 
 		SoundPlayer.TryPlayOnInstance("SFXPlayer", sound);

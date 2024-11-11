@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class Effect : RefCounted
@@ -7,7 +7,7 @@ public partial class Effect : RefCounted
 
     public AudioStream sound;
 
-    public virtual void Execute(List<Node> _targets)
+    public virtual void Execute(Array<Node> _targets)
     {
         
     }

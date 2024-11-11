@@ -1,8 +1,8 @@
 namespace DeckBuilder;
 
-using System;
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class SoundPlayer : Node
 {
@@ -27,7 +27,7 @@ public partial class SoundPlayer : Node
         }
     }
 
-    public void Play(AudioStream audio, Boolean single = false)
+    public void Play(AudioStream audio, bool single = false)
     {
         if (audio == null) return;
 

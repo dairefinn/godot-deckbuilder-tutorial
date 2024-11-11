@@ -1,7 +1,8 @@
-using Godot;
-using System.Collections.Generic;
-
 namespace DeckBuilder;
+
+using Godot;
+using Godot.Collections;
+
 
 public partial class CardStateMachine : Node
 {

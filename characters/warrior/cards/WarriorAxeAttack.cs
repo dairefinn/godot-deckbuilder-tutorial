@@ -1,12 +1,13 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class WarriorAxeAttack : Card
 {
 
-    public override void ApplyEffects(List<Node> targets)
+    public override void ApplyEffects(Array<Node> targets)
     {
         DamageEffect damageEffect = new()
         {

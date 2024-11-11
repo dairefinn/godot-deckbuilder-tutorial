@@ -1,7 +1,8 @@
 namespace DeckBuilder;
 
-using System.Linq;
 using Godot;
+using Godot.Collections;
+
 
 public partial class CardPileView : Control
 {
@@ -66,12 +67,11 @@ public partial class CardPileView : Control
     {
         if (cardPile == null) return;
 
-        Card[] allCards = new Card[cardPile.cards.Length];
-        cardPile.cards.CopyTo(allCards, 0);
+        Array<Card> allCards = cardPile.cards.Duplicate();
 
         if (randomized)
         {
-            allCards = allCards.OrderBy(x => GD.RandRange(0, 100)).ToArray();
+            allCards.Shuffle();
         }
 
         foreach (Card card in allCards)

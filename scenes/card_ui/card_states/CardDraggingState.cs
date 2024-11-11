@@ -16,7 +16,7 @@ public partial class CardDraggingState : CardState
 			cardUI.Reparent(uiLayer);
 		}
 
-		cardUI.panel.Set("theme_override_styles/panel", CardUI.DRAG_STYLEBOX);
+		cardUI.CardVisuals.panel.Set("theme_override_styles/panel", CardUI.DRAG_STYLEBOX);
 		Events.Instance.EmitSignal(Events.SignalName.CardDragStarted, cardUI);
 
 		minimumDragTimeElapsed = false;

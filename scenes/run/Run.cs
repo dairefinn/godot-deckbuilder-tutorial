@@ -17,6 +17,7 @@ public partial class Run : Node
 	public Node CurrentView;
 	public CardPileOpener deckButton;
 	public CardPileView deckView;
+	public GoldUI goldUI;
 
 	public Button BattleButton;
 	public Button CampfireButton;
@@ -25,6 +26,7 @@ public partial class Run : Node
 	public Button ShopButton;
 	public Button TreasureButton;
 
+	public RunStats stats;
 	public CharacterStats Character;
 
     public override void _Ready()
@@ -32,6 +34,7 @@ public partial class Run : Node
 		CurrentView = GetNode<Node>("CurrentView");
 		deckButton = GetNode<CardPileOpener>("%DeckButton");
 		deckView = GetNode<CardPileView>("%DeckView");
+		goldUI = GetNode<GoldUI>("%GoldUI");
 
 		BattleButton = GetNode<Button>("%BattleButton");
 		CampfireButton = GetNode<Button>("%CampfireButton");
@@ -59,6 +62,7 @@ public partial class Run : Node
 
 	public void StartRun()
 	{
+		stats = new RunStats();
 		SetupEventConnections();
 		SetupTopBar();
 		GD.Print("TODO: Procedurally generate map");
@@ -66,12 +70,13 @@ public partial class Run : Node
 
 	public void SetupTopBar()
 	{
+		goldUI.runStats = stats;
 		deckButton.cardPile = Character.deck;
 		deckView.cardPile = Character.deck;
 		deckButton.Pressed += () => deckView.ShowCurrentView("Deck");
 	}
 
-	public void ChangeView(PackedScene scene)
+	public Node ChangeView(PackedScene scene)
 	{
 		if (CurrentView.GetChildCount() > 0)
 		{
@@ -81,15 +86,18 @@ public partial class Run : Node
 		GetTree().Paused = false;
 		Node newView = scene.Instantiate();
 		CurrentView.AddChild(newView);
+
+		return newView;
 	}
 
 	public void SetupEventConnections()
 	{
-		Events.Instance.BattleWon += () => ChangeView(BATTLE_REWARD_SCENE);
 		Events.Instance.BattleRewardExited += () => ChangeView(MAP_SCENE);
 		Events.Instance.CampfireExited += () => ChangeView(MAP_SCENE);
 		Events.Instance.ShopExited += () => ChangeView(MAP_SCENE);
 		Events.Instance.TreasureRoomExited += () => ChangeView(MAP_SCENE);
+
+		Events.Instance.BattleWon += OnBattleWon;
 		Events.Instance.MapExited += OnMapExited;
 
 		BattleButton.Pressed += () => ChangeView(BATTLE_SCENE);
@@ -103,6 +111,16 @@ public partial class Run : Node
 	public void OnMapExited()
 	{
 		GD.Print("TODO: From the map, we need to change view based on the current room type");
+	}
+
+	public void OnBattleWon()
+	{
+		BattleReward rewardScene = ChangeView(BATTLE_REWARD_SCENE) as BattleReward;
+		rewardScene.runStats = stats;
+		rewardScene.characterStats = Character;
+
+		rewardScene.AddGoldReward(77);
+		rewardScene.AddCardReward();
 	}
 
 }

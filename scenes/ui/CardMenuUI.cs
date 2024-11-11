@@ -10,7 +10,7 @@ public partial class CardMenuUI : CenterContainer
     private readonly StyleBox BASE_STYLEBOX = GD.Load<StyleBox>("res://scenes/card_ui/card_base_stylebox.tres");
     private readonly StyleBox HOVER_STYLEBOX = GD.Load<StyleBox>("res://scenes/card_ui/card_hover_stylebox.tres");
 
-    public Control Visuals;
+    public CardVisuals CardVisuals;
 
     [Export] public Card card {
         get => _card;
@@ -18,20 +18,13 @@ public partial class CardMenuUI : CenterContainer
     }
     private Card _card;
 
-    public Panel panel;
-    public Label cost;
-    public TextureRect icon;
-
     public override void _Ready()
     {
-        Visuals = GetNode<Control>("Visuals");
-        panel = GetNode<Panel>("Visuals/Panel");
-        cost = GetNode<Label>("Visuals/Cost");
-        icon = GetNode<TextureRect>("Visuals/Icon");
+        CardVisuals = GetNode<CardVisuals>("CardVisuals");
 
-        Visuals.GuiInput += OnVisualsGuiInput;
-        Visuals.MouseEntered += OnVisualsMouseEntered;
-        Visuals.MouseExited += OnVisualsMouseExited;
+        CardVisuals.GuiInput += OnVisualsGuiInput;
+        CardVisuals.MouseEntered += OnVisualsMouseEntered;
+        CardVisuals.MouseExited += OnVisualsMouseExited;
     }
 
     public void OnVisualsGuiInput(InputEvent @event)
@@ -44,12 +37,12 @@ public partial class CardMenuUI : CenterContainer
 
     public void OnVisualsMouseEntered()
     {
-        panel.Set("theme_override_styles/panel", HOVER_STYLEBOX);
+        CardVisuals.panel.Set("theme_override_styles/panel", HOVER_STYLEBOX);
     }
 
     public void OnVisualsMouseExited()
     {
-        panel.Set("theme_override_styles/panel", BASE_STYLEBOX);
+        CardVisuals.panel.Set("theme_override_styles/panel", BASE_STYLEBOX);
     }
 
     public async void SetCard(Card value)
@@ -60,8 +53,7 @@ public partial class CardMenuUI : CenterContainer
         }
 
         _card = value;
-        cost.Text = card.cost.ToString();
-        icon.Texture = card.icon;
+        CardVisuals.card = value;
     }
 
 

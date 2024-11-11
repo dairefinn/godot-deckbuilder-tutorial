@@ -1,6 +1,5 @@
 namespace DeckBuilder;
 
-using System;
 using Godot;
 
 public partial class Events : Node

@@ -1,7 +1,9 @@
-using System.Collections.Generic;
-using Godot;
-
 namespace DeckBuilder;
+
+using System.Linq;
+using Godot;
+using Godot.Collections;
+
 
 public partial class CardTargetSelector : Node2D
 {
@@ -29,6 +31,9 @@ public partial class CardTargetSelector : Node2D
     public override void _Process(double delta)
     {
         if (!targeting) return;
+		
+		if (!IsInstanceValid(area2D)) return;
+		if (!IsInstanceValid(cardArc)) return;
 
 		area2D.Position = GetLocalMousePosition();
 		cardArc.Points = GetPoints();
@@ -37,6 +42,8 @@ public partial class CardTargetSelector : Node2D
     private void OnCardAimStarted(CardUI cardUI)
 	{
 		if (!cardUI.card.GetIsSingleTargeted()) return;
+		
+		if (!IsInstanceValid(area2D)) return;
 
 		targeting = true;
 		area2D.Monitoring = true;
@@ -46,6 +53,9 @@ public partial class CardTargetSelector : Node2D
 
 	private void OnCardAimEnded(CardUI cardUI)
 	{
+		if (!IsInstanceValid(area2D)) return;
+		if (!IsInstanceValid(cardArc)) return;
+
 		targeting = false;
 		cardArc.ClearPoints();
 		area2D.Position = Vector2.Zero;
@@ -78,7 +88,7 @@ public partial class CardTargetSelector : Node2D
 
 	private Vector2[] GetPoints()
 	{
-		List<Vector2> points = new();
+		Array<Vector2> points = new();
 		Vector2 start = currentCard.GlobalPosition;
 		start.X += currentCard.Size.X / 2;
 		Vector2 target = GetLocalMousePosition();

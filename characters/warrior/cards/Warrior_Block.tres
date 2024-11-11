@@ -8,6 +8,7 @@
 script = ExtResource("1_x1qmi")
 id = "warrior_block"
 type = 1
+rarity = 0
 target = 0
 cost = 1
 sound = ExtResource("3_rl4ae")

@@ -13,6 +13,7 @@ public partial class CharacterStats : Stats
 
     [ExportGroup("Gameplay Data")]
     [Export] public CardPile startingDeck;
+    [Export] public CardPile draftableCards;
     [Export] public int cardsPerTurn;
     [Export] public int maxMana;
 

@@ -1,7 +1,5 @@
 namespace DeckBuilder;
 
-using System;
-using System.Linq;
 using Godot;
 
 public partial class Hand : HBoxContainer
@@ -30,8 +28,9 @@ public partial class Hand : HBoxContainer
 	{
 		if (!IsInstanceValid(this)) return;
 
-		foreach (CardUI card in GetChildren().Cast<CardUI>())
+		foreach (Node cardNode in GetChildren())
 		{
+			if (cardNode is not CardUI card) continue;
 			if (!IsInstanceValid(card)) continue;
 			card.disabled = true;
 		}
@@ -41,7 +40,7 @@ public partial class Hand : HBoxContainer
 	{
 		child.disabled = true;
 		child.Reparent(this);
-		int newIndex = Math.Clamp(child.originalIndex, 0, GetChildCount());
+		int newIndex = Mathf.Clamp(child.originalIndex, 0, GetChildCount());
 		CallDeferred(MethodName.MoveChild, child, newIndex);
 		CallDeferred(MethodName.EnableCard, child);
 	}

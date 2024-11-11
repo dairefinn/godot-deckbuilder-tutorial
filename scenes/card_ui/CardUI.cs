@@ -1,7 +1,7 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
 
 
 public partial class CardUI : Control
@@ -20,13 +20,15 @@ public partial class CardUI : Control
 	private Card _card;
 	[Export] public CharacterStats charStats;
 
-	public Panel panel;
-	public Label cost;
-	public TextureRect icon;
+	// public Panel panel;
+	// public Label cost;
+	// public TextureRect icon;
+	public CardVisuals CardVisuals;
+
 
     public Area2D dropPointDetector;
 	public CardStateMachine cardStateMachine;
-	public List<Node> targets = new();
+	public Array<Node> targets = new();
 	public int originalIndex = 0;
 
 	public Control parent;
@@ -43,9 +45,7 @@ public partial class CardUI : Control
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		panel = GetNode<Panel>("Panel");
-		cost = GetNode<Label>("Cost");
-		icon = GetNode<TextureRect>("Icon");
+		CardVisuals = GetNode<CardVisuals>("CardVisuals");
 
 		dropPointDetector = GetNode<Area2D>("DropPointDetector");
 		cardStateMachine = GetNode<CardStateMachine>("CardStateMachine");
@@ -64,9 +64,7 @@ public partial class CardUI : Control
 		if (!IsNodeReady()) await ToSignal(this, "ready");
 
 		_card = value;
-
-        cost.Text = value.cost.ToString();
-        icon.Texture = value.icon;
+		CardVisuals.card = value;
 	}
 
     public override void _Input(InputEvent @event)
@@ -121,18 +119,17 @@ public partial class CardUI : Control
 	{
 		_playable = value;
 
-		if (!IsInstanceValid(cost)) return;
-		if (!IsInstanceValid(icon)) return;
+		if (!IsInstanceValid(CardVisuals)) return;
 
 		if (!playable)
 		{
-			cost.AddThemeColorOverride("font_color", Colors.Red);
-			icon.Modulate = new Color(1, 1, 1, 0.5f);
+			CardVisuals.cost.AddThemeColorOverride("font_color", Colors.Red);
+			CardVisuals.icon.Modulate = new Color(1, 1, 1, 0.5f);
 		}
 		else
 		{
-			cost.RemoveThemeColorOverride("font_color");
-			icon.Modulate = new Color(1, 1, 1, 1);
+			CardVisuals.cost.RemoveThemeColorOverride("font_color");
+			CardVisuals.icon.Modulate = new Color(1, 1, 1, 1);
 		}
 	}
 

@@ -1,6 +1,5 @@
 namespace DeckBuilder;
 
-using System.Linq;
 using Godot;
 
 public partial class PlayerHandler : Node
@@ -45,8 +44,9 @@ public partial class PlayerHandler : Node
 		if (!IsInstanceValid(this))	return;
 
 		Tween tween = CreateTween();
-		foreach (CardUI cardUI in hand.GetChildren().Cast<CardUI>())
+		foreach (Node cardUINode in hand.GetChildren())
 		{
+			if (cardUINode is not CardUI cardUI) continue;
 			if (!IsInstanceValid(cardUI)) continue;
 			tween.TweenCallback(Callable.From(() => character.discard.AddCard(cardUI.card)));
 			tween.TweenCallback(Callable.From(() => hand.DiscardCard(cardUI)));

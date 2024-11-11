@@ -17,7 +17,7 @@ public partial class CardBaseState : CardState
 			cardUI.tween.Kill();
 		}
 
-		cardUI.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
+		cardUI.CardVisuals.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
 		cardUI.EmitSignal(CardUI.SignalName.ReparentRequested, cardUI);
 		cardUI.PivotOffset = Vector2.Zero;
 
@@ -41,7 +41,7 @@ public partial class CardBaseState : CardState
 		if (!cardUI.playable) return;
 		if (cardUI.disabled) return;
 
-		cardUI.panel.Set("theme_override_styles/panel", CardUI.HOVER_STYLEBOX);
+		cardUI.CardVisuals.panel.Set("theme_override_styles/panel", CardUI.HOVER_STYLEBOX);
 		Events.Instance.EmitSignal(Events.SignalName.CardTooltipRequested, cardUI.card.icon, cardUI.card.tooltipText);
     }
 
@@ -50,7 +50,7 @@ public partial class CardBaseState : CardState
 		if (!cardUI.playable) return;
 		if (cardUI.disabled) return;
 
-		cardUI.panel.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
+		cardUI.CardVisuals.Set("theme_override_styles/panel", CardUI.BASE_STYLEBOX);
 		Events.Instance.EmitSignal(Events.SignalName.TooltipHideRequested);
 	}
 

@@ -1,14 +1,15 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class BlockEffect : Effect
 {
 
     public int amount = 0;
 
-    public override void Execute(List<Node> _targets)
+    public override void Execute(Array<Node> _targets)
     {
         foreach (Node target in _targets)
         {

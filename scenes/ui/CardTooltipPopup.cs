@@ -7,11 +7,15 @@ public partial class CardTooltipPopup : Control
 
     private readonly PackedScene CARD_MENU_UI_SCENE = GD.Load<PackedScene>("res://scenes/ui/card_menu_ui.tscn");
 
+    [Export] public Color backgroundColor = new("000000b0");
+
+    public ColorRect background;
     public CenterContainer tooltipCard;
     public RichTextLabel cardDescription;
 
     public override void _Ready()
     {
+        background = GetNode<ColorRect>("Background");
         tooltipCard = GetNode<CenterContainer>("%TooltipCard");
         cardDescription = GetNode<RichTextLabel>("%CardDescription");
 
@@ -24,6 +28,8 @@ public partial class CardTooltipPopup : Control
                 cardMenuUI.QueueFree();
             }
         }
+
+        background.Color = backgroundColor;
     }
 
     public void ShowTooltip(Card card)

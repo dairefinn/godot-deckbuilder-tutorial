@@ -3,14 +3,14 @@
 
 namespace DeckBuilder;
 
-using System;
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
+
 
 public partial class CardTemplate : Card
 {
 
-    public override void ApplyEffects(List<Node> targets)
+    public override void ApplyEffects(Array<Node> targets)
     {
         GD.Print("My card has been played");
         GD.Print("Targets: " + string.Join(", ", targets));

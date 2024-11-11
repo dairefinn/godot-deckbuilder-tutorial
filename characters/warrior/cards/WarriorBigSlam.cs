@@ -4,17 +4,18 @@ using Godot;
 using Godot.Collections;
 
 
-public partial class WarriorSlash : Card
+public partial class WarriorBigSlam : Card
 {
 
 	public override void ApplyEffects(Array<Node> targets)
 	{
 		DamageEffect damageEffect = new()
 		{
-			amount = 4,
+			amount = 10,
 			sound = sound
 		};
 		damageEffect.Execute(targets);
+		GD.Print("WarriorBigSlam card has been played");
 	}
 
 }

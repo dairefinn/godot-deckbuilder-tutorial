@@ -1,12 +1,12 @@
 namespace DeckBuilder;
 
-using System.Collections.Generic;
 using Godot;
+using Godot.Collections;
 
 public partial class WarriorBlock : Card
 {
 
-    public override void ApplyEffects(List<Node> targets)
+    public override void ApplyEffects(Array<Node> targets)
     {
         BlockEffect blockEffect = new()
         {
