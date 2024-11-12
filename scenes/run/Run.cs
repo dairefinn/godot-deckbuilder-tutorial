@@ -8,12 +8,12 @@ public partial class Run : Node
 	private PackedScene BATTLE_SCENE = GD.Load<PackedScene>("res://scenes/battle/battle.tscn");
 	private PackedScene BATTLE_REWARD_SCENE = GD.Load<PackedScene>("res://scenes/battle_reward/battle_reward.tscn");
 	private PackedScene CAMPFIRE_SCENE = GD.Load<PackedScene>("res://scenes/campfire/campfire.tscn");
-	private PackedScene MAP_SCENE = GD.Load<PackedScene>("res://scenes/map/map.tscn");
 	private PackedScene SHOP_SCENE = GD.Load<PackedScene>("res://scenes/shop/shop.tscn");
 	private PackedScene TREASURE_SCENE = GD.Load<PackedScene>("res://scenes/treasure/treasure.tscn");
 
 	[Export] RunStartup runStartup;
 
+	public Map map;
 	public Node CurrentView;
 	public CardPileOpener deckButton;
 	public CardPileView deckView;
@@ -31,6 +31,7 @@ public partial class Run : Node
 
     public override void _Ready()
     {
+		map = GetNode<Map>("Map");
 		CurrentView = GetNode<Node>("CurrentView");
 		deckButton = GetNode<CardPileOpener>("%DeckButton");
 		deckView = GetNode<CardPileView>("%DeckView");
@@ -65,7 +66,8 @@ public partial class Run : Node
 		stats = new RunStats();
 		SetupEventConnections();
 		SetupTopBar();
-		GD.Print("TODO: Procedurally generate map");
+		map.GenerateNewMap();
+		map.UnlockFloor(0);
 	}
 
 	public void SetupTopBar()
@@ -87,30 +89,58 @@ public partial class Run : Node
 		Node newView = scene.Instantiate();
 		CurrentView.AddChild(newView);
 
+		map.HideMap();
+
 		return newView;
+	}
+
+	public void ShowMap()
+	{
+		if (CurrentView.GetChildCount() > 0)
+		{
+			CurrentView.GetChild(0).QueueFree();
+		}
+
+		map.ShowMap();
+		map.UnlockNextRooms();
 	}
 
 	public void SetupEventConnections()
 	{
-		Events.Instance.BattleRewardExited += () => ChangeView(MAP_SCENE);
-		Events.Instance.CampfireExited += () => ChangeView(MAP_SCENE);
-		Events.Instance.ShopExited += () => ChangeView(MAP_SCENE);
-		Events.Instance.TreasureRoomExited += () => ChangeView(MAP_SCENE);
+		Events.Instance.BattleRewardExited += () => ShowMap();
+		Events.Instance.CampfireExited += () => ShowMap();
+		Events.Instance.ShopExited += () => ShowMap();
+		Events.Instance.TreasureRoomExited += () => ShowMap();
 
 		Events.Instance.BattleWon += OnBattleWon;
 		Events.Instance.MapExited += OnMapExited;
 
 		BattleButton.Pressed += () => ChangeView(BATTLE_SCENE);
 		CampfireButton.Pressed += () => ChangeView(CAMPFIRE_SCENE);
-		MapButton.Pressed += () => ChangeView(MAP_SCENE);
+		MapButton.Pressed += () => ShowMap();
 		RewardsButton.Pressed += () => ChangeView(BATTLE_REWARD_SCENE);
 		ShopButton.Pressed += () => ChangeView(SHOP_SCENE);
 		TreasureButton.Pressed += () => ChangeView(TREASURE_SCENE);
 	}
 
-	public void OnMapExited()
+	public void OnMapExited(Room room)
 	{
-		GD.Print("TODO: From the map, we need to change view based on the current room type");
+		switch (room.type)
+		{
+			case Room.Type.MONSTER:
+			case Room.Type.BOSS:
+				ChangeView(BATTLE_SCENE);
+				break;
+			case Room.Type.TREASURE:
+				ChangeView(TREASURE_SCENE);
+				break;
+			case Room.Type.CAMPFIRE:
+				ChangeView(CAMPFIRE_SCENE);
+				break;
+			case Room.Type.SHOP:
+				ChangeView(SHOP_SCENE);
+				break;
+		}
 	}
 
 	public void OnBattleWon()

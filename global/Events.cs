@@ -67,7 +67,7 @@ public partial class Events : Node
 
 	// Map related events
 
-	[Signal] public delegate void MapExitedEventHandler();
+	[Signal] public delegate void MapExitedEventHandler(Room room);
 
 	// Shop related events
 
