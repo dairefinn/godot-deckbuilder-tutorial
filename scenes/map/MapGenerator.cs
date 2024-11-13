@@ -16,7 +16,9 @@ public partial class MapGenerator : Node
     public static readonly float SHOP_ROOM_WEIGHT = 2.5f;
     public static readonly float CAMPFIRE_ROOM_WEIGHT = 4.0f;
 
-    public Godot.Collections.Dictionary<Room.Type, float> randomRoomTypeWeights = new()
+    [Export] public BattleStatsPool battleStatsPool;
+
+    public Dictionary<Room.Type, float> randomRoomTypeWeights = new()
     {
         { Room.Type.MONSTER, 0.0f },
         { Room.Type.SHOP, 0.0f },
@@ -39,6 +41,8 @@ public partial class MapGenerator : Node
                 currentPoint = SetupConnection(f, currentPoint);
             }
         }
+
+        battleStatsPool.Setup();
 
         SetupBossRoom();
         SetupRandomRoomWeights();
@@ -63,6 +67,7 @@ public partial class MapGenerator : Node
         }
 
         bossRoom.type = Room.Type.BOSS;
+        bossRoom.battleStats = battleStatsPool.GetRandomBattleForTier(2);
     }
 
     public void SetupRandomRoomWeights()
@@ -81,6 +86,7 @@ public partial class MapGenerator : Node
         {
             if (room.nextRooms.Count > 0) {
                 room.type = Room.Type.MONSTER;
+                room.battleStats = battleStatsPool.GetRandomBattleForTier(0);
             }
         }
 
@@ -140,6 +146,18 @@ public partial class MapGenerator : Node
         }
 
         room.type = typeCandidate;
+
+        if (typeCandidate == Room.Type.MONSTER)
+        {
+            int tierForMonsterRooms = 0;
+
+            if (room.row > 2)
+            {
+                tierForMonsterRooms = 1;
+            }
+
+            room.battleStats = battleStatsPool.GetRandomBattleForTier(tierForMonsterRooms);
+        }
     }
 
     public bool RoomHasParentOfType(Room room, Room.Type type)

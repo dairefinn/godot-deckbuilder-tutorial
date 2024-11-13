@@ -23,6 +23,9 @@ public partial class Room : Resource
     [Export] public Array<Room> nextRooms = new();
     [Export] public bool selected = false;
 
+    // This is only used by the MONSTER and BOSS types
+    [Export] public BattleStats battleStats;
+
     public override string ToString()
     {
         return string.Format("{0} ({1})", column, type.ToString()[0]);

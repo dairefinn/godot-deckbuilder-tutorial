@@ -5,6 +5,7 @@ using Godot;
 public partial class Battle : Node2D
 {
 
+	[Export] public BattleStats battleStats;
 	[Export] public CharacterStats charStats;
 	[Export] public AudioStream music;
 
@@ -19,27 +20,25 @@ public partial class Battle : Node2D
 		playerHandler = GetNode<PlayerHandler>("PlayerHandler");
 		enemyHandler = GetNode<EnemyHandler>("EnemyHandler");
 		player = GetNode<Player>("Player");
-		
-		// Normally, we would do this on a 'Run' level so we keep our health, gold and deck between battles
-		CharacterStats newStats = charStats.CreateInstance();
-		battleUI.charStats = newStats;
-		player.stats = newStats;
 
 		enemyHandler.ChildOrderChanged += OnEnemiesChildOrderChanged;
 		Events.Instance.PlayerDied += OnPlayerDied;
 		Events.Instance.EnemyTurnEnded += OnEnemyTurnEnded;
 		Events.Instance.PlayerTurnEnded += playerHandler.EndTurn;
 		Events.Instance.PlayerHandDiscarded += enemyHandler.StartTurn;
-
-		StartBattle(newStats);
 	}
 
-	public void StartBattle(CharacterStats stats)
+	public void StartBattle()
 	{
 		GetTree().Paused = false;
 		SoundPlayer.TryPlayOnInstance("MusicPlayer", music, true);
+
+		battleUI.charStats = charStats;
+		player.stats = charStats;
+		enemyHandler.SetupEnemies(battleStats);
 		enemyHandler.ResetEnemyActions();
-		playerHandler.StartBattle(stats);
+
+		playerHandler.StartBattle(charStats);
 		battleUI.InitializeCardPileUI();
 	}
 

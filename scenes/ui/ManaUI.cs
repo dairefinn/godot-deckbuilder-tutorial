@@ -36,6 +36,8 @@ public partial class ManaUI : Panel
 		if (charStats == null) return;
 		if (manaLabel == null) return;
 
+		if (!IsInstanceValid(manaLabel)) return;
+
 		manaLabel.Text = $"{charStats.mana}/{charStats.maxMana}";
 	}
 

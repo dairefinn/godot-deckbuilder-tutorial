@@ -129,7 +129,7 @@ public partial class Run : Node
 		{
 			case Room.Type.MONSTER:
 			case Room.Type.BOSS:
-				ChangeView(BATTLE_SCENE);
+				OnBattleRoomEntered(room);
 				break;
 			case Room.Type.TREASURE:
 				ChangeView(TREASURE_SCENE);
@@ -143,13 +143,21 @@ public partial class Run : Node
 		}
 	}
 
+	public void OnBattleRoomEntered(Room room)
+	{
+		Battle battleScene = ChangeView(BATTLE_SCENE) as Battle;
+		battleScene.charStats = Character;
+		battleScene.battleStats = room.battleStats;
+		battleScene.StartBattle();
+	}
+
 	public void OnBattleWon()
 	{
 		BattleReward rewardScene = ChangeView(BATTLE_REWARD_SCENE) as BattleReward;
 		rewardScene.runStats = stats;
 		rewardScene.characterStats = Character;
 
-		rewardScene.AddGoldReward(77);
+		rewardScene.AddGoldReward(map.lastRoom.battleStats.RollGoldReward());
 		rewardScene.AddCardReward();
 	}
 

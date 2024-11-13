@@ -12,6 +12,8 @@ public partial class EnemyHandler : Node2D
 
 	public void ResetEnemyActions()
 	{
+		if (!IsInstanceValid(this)) return;
+
 		foreach (Node enemyNode in GetChildren())
 		{
 			if (enemyNode is not Enemy enemy) continue;
@@ -34,6 +36,9 @@ public partial class EnemyHandler : Node2D
 
 	public void OnEnemyActionCompleted(Enemy enemy)
 	{
+		if (!IsInstanceValid(this)) return;
+		if (!IsInstanceValid(enemy)) return;
+
 		if (enemy.GetIndex() == GetChildCount() - 1)
 		{
 			Events.Instance.EmitSignal(Events.SignalName.EnemyTurnEnded);
@@ -44,6 +49,28 @@ public partial class EnemyHandler : Node2D
 		if (nextEnemyNode == null) return;
 		if (nextEnemyNode is not Enemy nextEnemy) return;
 		nextEnemy.DoTurn();
+	}
+
+	public void SetupEnemies(BattleStats battleStats)
+	{
+		if (battleStats == null) return;
+
+		foreach(Node enemyNode in GetChildren())
+		{
+			if (enemyNode is not Enemy enemy) continue;
+			enemy.QueueFree();
+		}
+
+		Node allNewEnemies = battleStats.enemies.Instantiate<Node>();
+
+		foreach (Node enemyNode in allNewEnemies.GetChildren())
+		{
+			if (enemyNode is not Enemy enemy) continue;
+			Enemy newEnemyChild = enemy.Duplicate() as Enemy;
+			AddChild(newEnemyChild);
+		}
+
+		allNewEnemies.QueueFree();
 	}
 
 }

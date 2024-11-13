@@ -60,6 +60,8 @@ public partial class PlayerHandler : Node
 
 	public void DrawCards(int cardsAmount)
 	{
+		if (!IsInstanceValid(this)) return;
+
 		Tween tween = CreateTween();
 		for (int i = 0; i < cardsAmount; i++)
 		{
