@@ -24,17 +24,8 @@ public partial class IntentUI : HBoxContainer
 
         icon.Texture = intent.icon;
         icon.Visible = icon.Texture != null;
-
-        bool isNumber = int.TryParse(intent.number, out int intentNumberParsed);
-        if (!isNumber)
-        {
-            number.Visible = false;
-        }
-        else
-        {
-            number.Text = string.Format("{0}", intentNumberParsed);
-            number.Visible = true;
-        }
+        number.Text = string.Format("{0}", intent.number);
+        number.Visible = intent.number != null;
     }
 
 }

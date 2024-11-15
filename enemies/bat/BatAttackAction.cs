@@ -34,7 +34,7 @@ public partial class BatAttackAction : EnemyAction
 			damageEffect.Execute(targetArray);
 			SoundPlayer.TryPlayOnInstance("SFXPlayer", sound);
 		}));
-		tween.TweenInterval(0.25f);
+		tween.TweenInterval(0.35f);
 		tween.TweenProperty(enemy, "global_position", start, 0.4f);
 		tween.Finished += () => {
 			Events.Instance.EmitSignal(Events.SignalName.EnemyActionCompleted, enemy);

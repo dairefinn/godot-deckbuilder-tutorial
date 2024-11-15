@@ -34,6 +34,8 @@ public partial class Map : Node2D
 
     public override void _Input(InputEvent @event)
     {
+        if (!Visible) return;
+
         Vector2 newPosition = camera2d.Position;
 
         if (@event.IsActionPressed("scroll_up"))

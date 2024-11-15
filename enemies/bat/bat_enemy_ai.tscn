@@ -30,6 +30,7 @@ sound = ExtResource("5_8fnmn")
 
 [node name="BatBlockAction" type="Node" parent="."]
 script = ExtResource("3_71311")
+block = 4
 intent = SubResource("Resource_fuebu")
 type = 1
 chanceWeight = 1.0

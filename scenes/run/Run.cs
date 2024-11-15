@@ -17,6 +17,7 @@ public partial class Run : Node
 	public Node CurrentView;
 	public CardPileOpener deckButton;
 	public CardPileView deckView;
+	public HealthUI healthUI;
 	public GoldUI goldUI;
 
 	public Button BattleButton;
@@ -35,6 +36,7 @@ public partial class Run : Node
 		CurrentView = GetNode<Node>("CurrentView");
 		deckButton = GetNode<CardPileOpener>("%DeckButton");
 		deckView = GetNode<CardPileView>("%DeckView");
+		healthUI = GetNode<HealthUI>("%HealthUI");
 		goldUI = GetNode<GoldUI>("%GoldUI");
 
 		BattleButton = GetNode<Button>("%BattleButton");
@@ -72,6 +74,8 @@ public partial class Run : Node
 
 	public void SetupTopBar()
 	{
+		Character.StatsChanged += () => healthUI.UpdateStats(Character);
+		healthUI.UpdateStats(Character);
 		goldUI.runStats = stats;
 		deckButton.cardPile = Character.deck;
 		deckView.cardPile = Character.deck;
@@ -135,7 +139,7 @@ public partial class Run : Node
 				ChangeView(TREASURE_SCENE);
 				break;
 			case Room.Type.CAMPFIRE:
-				ChangeView(CAMPFIRE_SCENE);
+				OnCampfireRoomEntered();
 				break;
 			case Room.Type.SHOP:
 				ChangeView(SHOP_SCENE);
@@ -149,6 +153,12 @@ public partial class Run : Node
 		battleScene.charStats = Character;
 		battleScene.battleStats = room.battleStats;
 		battleScene.StartBattle();
+	}
+
+	public void OnCampfireRoomEntered()
+	{
+		Campfire campfireScene = ChangeView(CAMPFIRE_SCENE) as Campfire;
+		campfireScene.charStats = Character;
 	}
 
 	public void OnBattleWon()

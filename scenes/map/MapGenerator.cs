@@ -1,5 +1,6 @@
 namespace DeckBuilder;
 
+using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 
@@ -18,7 +19,7 @@ public partial class MapGenerator : Node
 
     [Export] public BattleStatsPool battleStatsPool;
 
-    public Dictionary<Room.Type, float> randomRoomTypeWeights = new()
+    public Godot.Collections.Dictionary<Room.Type, float> randomRoomTypeWeights = new()
     {
         { Room.Type.MONSTER, 0.0f },
         { Room.Type.SHOP, 0.0f },
@@ -76,7 +77,7 @@ public partial class MapGenerator : Node
         randomRoomTypeWeights[Room.Type.CAMPFIRE] = MONSTER_ROOM_WEIGHT + CAMPFIRE_ROOM_WEIGHT;
         randomRoomTypeWeights[Room.Type.SHOP] = MONSTER_ROOM_WEIGHT + CAMPFIRE_ROOM_WEIGHT + SHOP_ROOM_WEIGHT;
 
-        randomRoomTypeTotalWeight = randomRoomTypeWeights[Room.Type.SHOP];
+        randomRoomTypeTotalWeight = MONSTER_ROOM_WEIGHT + CAMPFIRE_ROOM_WEIGHT + SHOP_ROOM_WEIGHT;
     }
 
     public void SetupRoomTypes()
@@ -209,9 +210,12 @@ public partial class MapGenerator : Node
     {
         double roll = GD.RandRange(0.0f, randomRoomTypeTotalWeight);
 
-        foreach (Room.Type type in randomRoomTypeWeights.Keys)
+        List<Room.Type> validTypes = new() { Room.Type.MONSTER, Room.Type.CAMPFIRE, Room.Type.SHOP };
+
+        // foreach (Room.Type type in randomRoomTypeWeights.Keys) // Note: This was ignoring the last key of the dictionary so I replaced it with validTypes
+        foreach (Room.Type type in validTypes)
         {
-            if (randomRoomTypeWeights[type] > roll)
+            if (randomRoomTypeWeights[type] >= roll)
             {
                 return type;
             }

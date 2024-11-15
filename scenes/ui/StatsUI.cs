@@ -7,26 +7,25 @@ public partial class StatsUI : HBoxContainer
 
 	public HBoxContainer block;
 	public Label blockLabel;
-	public HBoxContainer health;
-	public Label healthLabel;
+	public HealthUI health;
 
 	public override void _Ready()
 	{
 		block = GetNode<HBoxContainer>("%Block");
 		blockLabel = GetNode<Label>("%BlockLabel");
-		health = GetNode<HBoxContainer>("%Health");
-		healthLabel = GetNode<Label>("%HealthLabel");
+		health = GetNode<HealthUI>("%Health");
 	}
 
 	public void UpdateStats(Stats stats)
 	{
 		if (!IsInstanceValid(blockLabel)) return;
-		if (!IsInstanceValid(healthLabel)) return;
+		if (!IsInstanceValid(health)) return;
 
 		blockLabel.Text = stats.block.ToString();
-		healthLabel.Text = stats.health.ToString();
+		health.UpdateStats(stats);
 
-		block.Visible = stats.block > 0;
+		// block.Visible = stats.block > 0;
+		block.Visible = true;
 		health.Visible = stats.health > 0;
 	}
 

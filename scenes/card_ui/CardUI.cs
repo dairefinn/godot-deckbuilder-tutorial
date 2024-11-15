@@ -18,7 +18,11 @@ public partial class CardUI : Control
 		set => SetCard(value);
 	}
 	private Card _card;
-	[Export] public CharacterStats charStats;
+	[Export] public CharacterStats charStats {
+		get => _charStats;
+		set => SetCharStats(value);
+	}
+	private CharacterStats _charStats;
 
 	// public Panel panel;
 	// public Label cost;
@@ -135,7 +139,7 @@ public partial class CardUI : Control
 
 	public void SetCharStats(CharacterStats value)
 	{
-		charStats = value;
+		_charStats = value;
 		charStats.StatsChanged += OnCharStatsChanged;
 	}
 

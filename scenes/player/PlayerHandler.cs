@@ -43,6 +43,12 @@ public partial class PlayerHandler : Node
 	{
 		if (!IsInstanceValid(this))	return;
 
+		if (hand.GetChildCount() == 0)
+		{
+			Events.Instance.EmitSignal(Events.SignalName.PlayerHandDiscarded);
+			return;
+		}
+
 		Tween tween = CreateTween();
 		foreach (Node cardUINode in hand.GetChildren())
 		{
@@ -97,4 +103,5 @@ public partial class PlayerHandler : Node
 	{
 		character.discard.AddCard(card);
 	}
+
 }
