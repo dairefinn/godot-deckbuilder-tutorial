@@ -41,9 +41,9 @@ public partial class Enemy : Area2D
 	{
 		_currentAction = value;
 
-		if (_currentAction != null)
+		if (currentAction != null)
 		{
-			intentUI?.UpdateIntent(_currentAction.intent);
+			intentUI?.UpdateIntent(currentAction.intent);
 		}
 	}
 
