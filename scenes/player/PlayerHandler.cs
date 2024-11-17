@@ -8,6 +8,7 @@ public partial class PlayerHandler : Node
 	const float HAND_DRAW_INTERVAL = 0.25f;
 	const float HAND_DISCARD_INTERVAL = 0.25f;
 
+	[Export] public Player player;
 	[Export] public Hand hand;
 
 	public CharacterStats character;
@@ -23,6 +24,7 @@ public partial class PlayerHandler : Node
 		character.drawPile = character.deck.Duplicate(true) as CardPile;
 		character.drawPile.Shuffle();
 		character.discard = new CardPile();
+		player.statusHandler.StatusesApplied += OnStatusesApplied;
 		StartTurn();
 	}
 
@@ -30,13 +32,13 @@ public partial class PlayerHandler : Node
 	{
 		character.block = 0;
 		character.ResetMana();
-		DrawCards(character.cardsPerTurn);
+		player.statusHandler.ApplyStatusesByType(Status.Type.START_OF_TURN);
 	}
 
 	public void EndTurn()
 	{
 		hand.DisableHand();
-		DiscardCards();
+		player.statusHandler.ApplyStatusesByType(Status.Type.END_OF_TURN);
 	}
 
 	public void DiscardCards()
@@ -101,7 +103,22 @@ public partial class PlayerHandler : Node
 
 	public void OnCardPlayed(Card card)
 	{
+		if (card.exhausts || card.type == Card.Type.POWER) return;
+
 		character.discard.AddCard(card);
+	}
+
+	public void OnStatusesApplied(Status.Type type)
+	{
+		switch (type)
+		{
+			case Status.Type.START_OF_TURN:
+				DrawCards(character.cardsPerTurn);
+				break;
+			case Status.Type.END_OF_TURN:
+				DiscardCards();
+				break;
+		}
 	}
 
 }

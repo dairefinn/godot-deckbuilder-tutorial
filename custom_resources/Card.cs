@@ -40,6 +40,7 @@ public partial class Card : Resource
     [Export] public Target target;
     [Export] public int cost;
     [Export] public AudioStream sound;
+    [Export] public bool exhausts = false;
 
     [ExportGroup("Card visuals")]
     [Export] public Texture2D icon;

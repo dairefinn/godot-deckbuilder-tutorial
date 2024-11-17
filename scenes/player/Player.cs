@@ -9,6 +9,7 @@ public partial class Player : Node2D
 
 	public Sprite2D sprite2D;
 	public StatsUI statsUI;
+	public StatusHandler statusHandler;
 	
 	[Export] public CharacterStats stats {
 		get => _stats;
@@ -20,6 +21,9 @@ public partial class Player : Node2D
 	{
 		sprite2D = GetNode<Sprite2D>("Sprite2D");
 		statsUI = GetNode<StatsUI>("StatsUI");
+		statusHandler = GetNode<StatusHandler>("StatusHandler");
+
+		statusHandler.statusOwner = this;
 	}
 
 	public void SetStats(CharacterStats value)

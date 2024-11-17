@@ -59,6 +59,7 @@ public partial class Events : Node
 
 	[Signal] public delegate void EnemyActionCompletedEventHandler(Enemy enemy);
 	[Signal] public delegate void EnemyTurnEndedEventHandler();
+	[Signal] public delegate void EnemyDiedEventHandler(Enemy enemy);
 
 	// Battle related events
 

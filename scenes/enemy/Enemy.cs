@@ -18,6 +18,7 @@ public partial class Enemy : Area2D
 	public Sprite2D arrow;
 	public StatsUI statsUI;
 	public IntentUI intentUI;
+	public StatusHandler statusHandler;
 
 	public EnemyActionPicker enemyActionPicker;
 	public EnemyAction currentAction {
@@ -32,9 +33,12 @@ public partial class Enemy : Area2D
 		arrow = GetNode<Sprite2D>("Arrow");
 		statsUI = GetNode<StatsUI>("StatsUI");
 		intentUI = GetNode<IntentUI>("IntentUI");
+		statusHandler = GetNode<StatusHandler>("StatusHandler");
 
 		AreaEntered += OnAreaEntered;
 		AreaExited += OnAreaExited;
+
+		statusHandler.statusOwner = this;
 	}
 
 	public void SetCurrentAction(EnemyAction value)
@@ -129,6 +133,7 @@ public partial class Enemy : Area2D
 			sprite2D.Material = null;
 			if (stats.health <= 0)
 			{
+				Events.Instance.EmitSignal(Events.SignalName.EnemyDied, this);
 				QueueFree(); // Remove the enemy from the scene
 			}
 		};

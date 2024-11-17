@@ -39,9 +39,9 @@ public partial class Stats : Resource
         if (damage < 0) return;
 
         int initialDamage = damage;
-        damage = Mathf.Clamp(damage - block, 0, damage);
+        int damageAfterBlock = Mathf.Clamp(damage - block, 0, damage);
         block -= Mathf.Clamp(block - initialDamage, 0, block);
-        health -= damage;
+        health -= damageAfterBlock;
     }
 
     public void Heal(int amount)

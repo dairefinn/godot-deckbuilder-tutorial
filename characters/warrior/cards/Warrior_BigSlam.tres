@@ -12,5 +12,6 @@ rarity = 1
 target = 1
 cost = 2
 sound = ExtResource("3_fthdp")
+exhausts = true
 icon = ExtResource("1_at4e2")
 tooltipText = "[center]Deal [color=\"ff0000\"]10[/color] damage and apply 2 [color=\"ffdf00\"]Exposed[/color].[/center]"
