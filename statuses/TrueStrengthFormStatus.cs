@@ -13,8 +13,6 @@ public partial class TrueStrengthFormStatus : Status
 
     public override void ApplyStatus(Node target)
 	{
-		GD.Print("Applied true strength form");
-
         MuscleStatus muscle = MUSCLE_STATUS.Duplicate() as MuscleStatus;
         muscle.stacks = stacksPerTurn;
 		StatusEffect statusEffect = new()

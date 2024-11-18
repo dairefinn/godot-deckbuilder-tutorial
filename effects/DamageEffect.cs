@@ -7,6 +7,7 @@ public partial class DamageEffect : Effect
 {
 
     public int amount = 0;
+    public Modifier.Type receiverModifierType = Modifier.Type.DMG_TAKEN;
 
     public override void Execute(Array<Node> _targets)
     {
@@ -16,14 +17,14 @@ public partial class DamageEffect : Effect
 
             if (target is Enemy e)
             {
-                e.TakeDamage(amount);
+                e.TakeDamage(amount, receiverModifierType);
                 SoundPlayer.TryPlayOnInstance("SFXPlayer", sound, true);
                 continue;
             }
 
             if (target is Player p)
             {
-                p.TakeDamage(amount);
+                p.TakeDamage(amount, receiverModifierType);
                 SoundPlayer.TryPlayOnInstance("SFXPlayer", sound, true);
                 continue;
             }

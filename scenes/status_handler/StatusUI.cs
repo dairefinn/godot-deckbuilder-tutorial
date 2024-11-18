@@ -45,7 +45,7 @@ public partial class StatusUI : Control
             CustomMinimumSize = stacks.Size + stacks.Position;
         }
 
-        if (!status.IsConnected(Status.SignalName.StatusChanged, Callable.From(OnStatusChanged)))
+        if (!status.IsConnected(Status.SignalName.StatusChanged, new Callable(this, MethodName.OnStatusChanged)))
 		{
             status.StatusChanged += OnStatusChanged;
 		}

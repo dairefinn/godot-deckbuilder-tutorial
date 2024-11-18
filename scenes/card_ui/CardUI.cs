@@ -13,6 +13,7 @@ public partial class CardUI : Control
 
     [Signal] public delegate void ReparentRequestedEventHandler(CardUI whichCardUI);
 
+	[Export] public ModifierHandler playerModifiers;
 	[Export] public Card card {
 		get => _card;
 		set => SetCard(value);
@@ -114,7 +115,7 @@ public partial class CardUI : Control
 	{
 		if (card == null) return;
 
-		card.Play(targets, charStats);
+		card.Play(targets, charStats, playerModifiers);
 
 		QueueFree();
 	}

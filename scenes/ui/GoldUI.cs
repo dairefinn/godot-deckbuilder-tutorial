@@ -17,9 +17,9 @@ public partial class GoldUI : HBoxContainer
     {
         _runStats = value;
 
-        if (!value.IsConnected(RunStats.SignalName.GoldChanged, Callable.From(UpdateGold)))
+        if (!value.IsConnected(RunStats.SignalName.GoldChanged, new Callable(this, MethodName.UpdateGold)))
         {
-            value.Connect(RunStats.SignalName.GoldChanged, Callable.From(UpdateGold));
+            value.Connect(RunStats.SignalName.GoldChanged, new Callable(this, MethodName.UpdateGold));
             UpdateGold();
         }
     }

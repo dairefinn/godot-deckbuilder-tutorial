@@ -11,11 +11,11 @@ public partial class WarriorBigSlam : Card
 	public int baseDamage = 4;
 	public int exposedDuration = 2;
 
-	public override void ApplyEffects(Array<Node> targets)
+	public override void ApplyEffects(Array<Node> targets, ModifierHandler modifiers)
 	{
 		DamageEffect damageEffect = new()
 		{
-			amount = baseDamage,
+			amount = modifiers.GetModifiedValue(baseDamage, Modifier.Type.DMG_DEALT),
 			sound = sound
 		};
 		damageEffect.Execute(targets);

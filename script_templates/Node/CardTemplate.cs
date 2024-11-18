@@ -10,7 +10,7 @@ using Godot.Collections;
 public partial class CardTemplate : Card
 {
 
-    public override void ApplyEffects(Array<Node> targets)
+    public override void ApplyEffects(Array<Node> targets, ModifierHandler modifiers)
     {
         GD.Print("My card has been played");
         GD.Print("Targets: " + string.Join(", ", targets));

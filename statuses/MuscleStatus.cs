@@ -10,15 +10,37 @@ public partial class MuscleStatus : Status
 
     public override void InitializeStatus(Node target)
     {
-        StatusChanged += OnStatusChanged;
-        OnStatusChanged();
+        StatusChanged += () => OnStatusChanged(target);
+        OnStatusChanged(target);
     }
 
-    public void OnStatusChanged()
+    public void OnStatusChanged(Node target)
     {
-        GD.Print("Muscle status: +" + stacks + "% damage");
+        if (target == null)
+        {
+            GD.PushError("Target is null");
+            return;
+        }
 
-        EmitSignal(SignalName.StatusApplied, this);
+        ModifierHandler modifierHandler = (ModifierHandler)target.Get("modifierHandler");
+        if (modifierHandler == null)
+        {
+            GD.PushError("No modifiers on " + target);
+            return;
+        }
+
+        Modifier damageDealtModifier = modifierHandler.GetModifier(Modifier.Type.DMG_DEALT);
+        if (damageDealtModifier == null)
+        {
+            GD.PrintErr("No damage dealt modifier on " + target);
+            return;
+        }
+
+        ModifierValue muscleModifierValue = damageDealtModifier.GetValue("muscle");
+        muscleModifierValue ??= ModifierValue.CreateNewModifier("muscle", ModifierValue.Type.FLAT);
+
+        muscleModifierValue.flatValue = stacks;
+        damageDealtModifier.AddNewValue(muscleModifierValue);
     }
 
 }

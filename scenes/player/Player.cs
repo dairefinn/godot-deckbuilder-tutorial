@@ -10,6 +10,7 @@ public partial class Player : Node2D
 	public Sprite2D sprite2D;
 	public StatsUI statsUI;
 	public StatusHandler statusHandler;
+	public ModifierHandler modifierHandler;
 	
 	[Export] public CharacterStats stats {
 		get => _stats;
@@ -22,6 +23,7 @@ public partial class Player : Node2D
 		sprite2D = GetNode<Sprite2D>("Sprite2D");
 		statsUI = GetNode<StatsUI>("StatsUI");
 		statusHandler = GetNode<StatusHandler>("StatusHandler");
+		modifierHandler = GetNode<ModifierHandler>("ModifierHandler");
 
 		statusHandler.statusOwner = this;
 	}
@@ -30,7 +32,7 @@ public partial class Player : Node2D
 	{
 		_stats = value;
 
-		if (!value.IsConnected(CharacterStats.SignalName.StatsChanged, Callable.From(UpdateStats)))
+		if (!value.IsConnected(CharacterStats.SignalName.StatsChanged, new Callable(this, MethodName.UpdateStats)))
 		{
 			_stats.StatsChanged += UpdateStats;
 		}
@@ -52,15 +54,16 @@ public partial class Player : Node2D
 		statsUI.UpdateStats(stats);
 	}
 
-	public void TakeDamage(int damage)
+	public void TakeDamage(int damage, Modifier.Type whichModifier)
 	{
 		if (stats.health <= 0) return;
 
 		sprite2D.Material = WHITE_SPRITE_MATERIAL;
+		int modifiedDamage = modifierHandler.GetModifiedValue(damage, whichModifier);
 
 		Tween tween = CreateTween();
 		tween.TweenCallback(Callable.From(() => Shaker.Instance.Shake(this, 16f, 0.15f)));
-		tween.TweenCallback(Callable.From(() => stats.TakeDamage(damage)));
+		tween.TweenCallback(Callable.From(() => stats.TakeDamage(modifiedDamage)));
 		tween.TweenInterval(0.17f);
 		
 		tween.Finished += () => {

@@ -23,7 +23,7 @@ public partial class ManaUI : Panel
 	{
 		_charStats = stats;
 		
-		if (!_charStats.IsConnected(CharacterStats.SignalName.StatsChanged, Callable.From(OnStatsChanged)))
+		if (!_charStats.IsConnected(CharacterStats.SignalName.StatsChanged, new Callable(this, MethodName.OnStatsChanged)))
 		{
 			_charStats.StatsChanged += OnStatsChanged;
 		}

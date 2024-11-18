@@ -73,7 +73,7 @@ public partial class PlayerHandler : Node
 		Tween tween = CreateTween();
 		for (int i = 0; i < cardsAmount; i++)
 		{
-			tween.TweenCallback(Callable.From(DrawCard));
+			tween.TweenCallback(new Callable(this, MethodName.DrawCard));
 			tween.TweenInterval(HAND_DRAW_INTERVAL);
 		}
 

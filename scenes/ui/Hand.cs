@@ -5,6 +5,7 @@ using Godot;
 public partial class Hand : HBoxContainer
 {
 
+	[Export] public Player player;
 	[Export] public CharacterStats charStats;
 
 	private PackedScene cardUIResource = GD.Load<PackedScene>("res://scenes/card_ui/card_ui.tscn");
@@ -17,6 +18,7 @@ public partial class Hand : HBoxContainer
 		newCardUI.card = card;
 		newCardUI.parent = this;
 		newCardUI.charStats = charStats;
+		newCardUI.playerModifiers = player.modifierHandler;
 	}
 
 	public void DiscardCard(CardUI card)

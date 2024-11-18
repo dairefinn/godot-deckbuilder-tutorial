@@ -19,6 +19,7 @@ public partial class Enemy : Area2D
 	public StatsUI statsUI;
 	public IntentUI intentUI;
 	public StatusHandler statusHandler;
+	public ModifierHandler modifierHandler;
 
 	public EnemyActionPicker enemyActionPicker;
 	public EnemyAction currentAction {
@@ -34,6 +35,7 @@ public partial class Enemy : Area2D
 		statsUI = GetNode<StatsUI>("StatsUI");
 		intentUI = GetNode<IntentUI>("IntentUI");
 		statusHandler = GetNode<StatusHandler>("StatusHandler");
+		modifierHandler = GetNode<ModifierHandler>("ModifierHandler");
 
 		AreaEntered += OnAreaEntered;
 		AreaExited += OnAreaExited;
@@ -55,7 +57,7 @@ public partial class Enemy : Area2D
 	{
 		_stats = value.CreateInstance();
 
-		if (!value.IsConnected(Stats.SignalName.StatsChanged, Callable.From(UpdateStats)))
+		if (!value.IsConnected(Stats.SignalName.StatsChanged, new Callable(this, MethodName.UpdateStats)))
 		{
 			_stats.StatsChanged += UpdateStats;
 			_stats.StatsChanged += UpdateAction;
@@ -118,15 +120,16 @@ public partial class Enemy : Area2D
 		currentAction.PerformAction();
 	}
 
-	public void TakeDamage(int damage)
+	public void TakeDamage(int damage, Modifier.Type whichModifier)
 	{
 		if (stats.health <= 0) return;
 
 		sprite2D.Material = WHITE_SPRITE_MATERIAL;
+		int modifiedDamage = modifierHandler.GetModifiedValue(damage, whichModifier);
 
 		Tween tween = CreateTween();
 		tween.TweenCallback(Callable.From(() => Shaker.Instance.Shake(this, 16f, 0.15f)));
-		tween.TweenCallback(Callable.From(() => stats.TakeDamage(damage)));
+		tween.TweenCallback(Callable.From(() => stats.TakeDamage(modifiedDamage)));
 		tween.TweenInterval(0.17f);
 		
 		tween.Finished += () => {

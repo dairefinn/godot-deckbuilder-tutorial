@@ -38,7 +38,7 @@ public partial class Tooltip : PanelContainer
 		tooltipTextLabel.Text = text;
 
 		tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
-		tween.TweenCallback(Callable.From(Show));
+		tween.TweenCallback(new Callable(this, MethodName.Show));
 		tween.TweenProperty(this, "modulate", Colors.White, fadeSeconds);
 	}
 
@@ -58,7 +58,7 @@ public partial class Tooltip : PanelContainer
 
 		tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
 		tween.TweenProperty(this, "modulate", Colors.Transparent, fadeSeconds);
-		tween.TweenCallback(Callable.From(Hide));
+		tween.TweenCallback(new Callable(this, MethodName.Hide));
 	}
 
 	private void show()

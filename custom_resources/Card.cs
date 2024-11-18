@@ -71,22 +71,22 @@ public partial class Card : Resource
         }
     }
 
-    public void Play(Array<Node> targets, CharacterStats characterStats)
+    public void Play(Array<Node> targets, CharacterStats characterStats, ModifierHandler modifiers)
     {
         Events.Instance.EmitSignal(Events.SignalName.CardPlayed, this);
         characterStats.mana -= cost;
 
         if (GetIsSingleTargeted())
         {
-           ApplyEffects(targets);
+           ApplyEffects(targets, modifiers);
         }
         else
         {
-            ApplyEffects(GetTargets(targets));
+            ApplyEffects(GetTargets(targets), modifiers);
         }
     }
 
-    public virtual void ApplyEffects(Array<Node> targets)
+    public virtual void ApplyEffects(Array<Node> targets, ModifierHandler modifiers)
     {
     }
 

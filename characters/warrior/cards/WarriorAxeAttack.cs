@@ -7,13 +7,15 @@ using Godot.Collections;
 public partial class WarriorAxeAttack : Card
 {
 
-    public override void ApplyEffects(Array<Node> targets)
+    public int baseDamage = 6;
+
+    public override void ApplyEffects(Array<Node> targets, ModifierHandler modifiers)
     {
         DamageEffect damageEffect = new()
         {
-            amount = 6
+            amount = modifiers.GetModifiedValue(baseDamage, Modifier.Type.DMG_DEALT),
+            sound = sound
         };
-        damageEffect.sound = sound;
         damageEffect.Execute(targets);
     }
 
