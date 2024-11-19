@@ -52,5 +52,10 @@ public partial class ExposedStatus : Status
 		}
 	}
 
+    public override string GetTooltip()
+    {
+        return string.Format(tooltip, duration);
+    }
+
 }
 

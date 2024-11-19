@@ -36,4 +36,9 @@ public partial class EnemyAction : Node
         if (!IsPerformable()) return;
     }
 
+    public virtual void UpdateIntentText()
+    {
+        intent.currentText = intent.baseText;
+    }
+
 }

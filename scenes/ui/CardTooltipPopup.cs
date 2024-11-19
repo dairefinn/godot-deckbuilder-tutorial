@@ -38,7 +38,7 @@ public partial class CardTooltipPopup : Control
         tooltipCard.AddChild(newCard);
         newCard.card = card;
         newCard.TooltipRequested += (card) => HideTooltip();
-        cardDescription.Text = card.tooltipText;
+        cardDescription.Text = card.GetDefaultTooltip();
         Show();
     }
 

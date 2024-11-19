@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Status" load_steps=3 format=3 uid="uid://g22ofj43lijc"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://g22ofj43lijc"]
 
 [ext_resource type="Texture2D" uid="uid://xp7qljrcutug" path="res://art/muscle.png" id="1_7vabp"]
 [ext_resource type="Script" path="res://statuses/MuscleStatus.cs" id="1_ktkul"]
@@ -12,4 +12,4 @@ canExpire = false
 duration = 0
 stacks = 2
 icon = ExtResource("1_7vabp")
-tooltip = "TODO"
+tooltip = "Muscle: attacks deal {0} more damage."

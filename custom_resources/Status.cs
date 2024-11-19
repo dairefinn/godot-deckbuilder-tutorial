@@ -54,7 +54,7 @@ public partial class Status : Resource
         EmitSignal(SignalName.StatusApplied, this);
     }
 
-    public string GetTooltip()
+    public virtual string GetTooltip()
     {
         return tooltip;
     }

@@ -14,4 +14,4 @@ cost = 2
 sound = ExtResource("3_og68f")
 exhausts = false
 icon = ExtResource("1_o861j")
-tooltipText = "[center]Deal [color=\"ff0000\"]4[/color] damage to all enemies.[/center]"
+tooltipText = "[center]Deal [color=\"ff0000\"]{0}[/color] damage to all enemies.[/center]"

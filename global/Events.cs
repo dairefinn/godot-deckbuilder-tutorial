@@ -1,6 +1,8 @@
 namespace DeckBuilder;
 
 using Godot;
+using Godot.Collections;
+
 
 public partial class Events : Node
 {
@@ -65,6 +67,7 @@ public partial class Events : Node
 
 	[Signal] public delegate void BattleOverScreenRequestedEventHandler(string text, BattleOverPanel.Type type);
 	[Signal] public delegate void BattleWonEventHandler();
+	[Signal] public delegate void StatusTooltipRequestedEventHandler(Array<Status> statuses);
 
 	// Map related events
 

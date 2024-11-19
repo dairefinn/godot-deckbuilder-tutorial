@@ -46,11 +46,7 @@ public partial class Enemy : Area2D
 	public void SetCurrentAction(EnemyAction value)
 	{
 		_currentAction = value;
-
-		if (currentAction != null)
-		{
-			intentUI?.UpdateIntent(currentAction.intent);
-		}
+		UpdateIntent();
 	}
 
 	public void SetEnemyStats(EnemyStats value)
@@ -64,6 +60,15 @@ public partial class Enemy : Area2D
 		}
 
 		UpdateEnemy();
+	}
+
+	public void UpdateIntent()
+	{
+		if (currentAction != null)
+		{
+			currentAction.UpdateIntentText();
+			intentUI?.UpdateIntent(currentAction.intent);
+		}
 	}
 
 	public void UpdateStats()

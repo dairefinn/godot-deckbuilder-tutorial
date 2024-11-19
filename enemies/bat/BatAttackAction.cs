@@ -41,5 +41,13 @@ public partial class BatAttackAction : EnemyAction
 		};
 	}
 
+    public override void UpdateIntentText()
+    {
+		if (target is not Player player) return;
+
+        int modifiedDamage = player.modifierHandler.GetModifiedValue(damage, Modifier.Type.DMG_TAKEN);
+        intent.currentText = string.Format(intent.baseText, modifiedDamage);
+    }
+
 }
 

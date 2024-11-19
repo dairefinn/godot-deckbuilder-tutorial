@@ -12,6 +12,7 @@ public partial class EnemyHandler : Node2D
     {
 		Events.Instance.EnemyDied += OnEnemyDied;
 		Events.Instance.EnemyActionCompleted += OnEnemyActionCompleted;
+		Events.Instance.PlayerHandDrawn += OnPlayerHandDrawn;
     }
 
 	public void ResetEnemyActions()
@@ -103,6 +104,15 @@ public partial class EnemyHandler : Node2D
 		if (isEnemyTurn)
 		{
 			StartNextEnemyTurn();
+		}
+	}
+
+	public void OnPlayerHandDrawn()
+	{
+		foreach (Node enemyNode in GetChildren())
+		{
+			if (enemyNode is not Enemy enemy) continue;
+			enemy.UpdateIntent();
 		}
 	}
 

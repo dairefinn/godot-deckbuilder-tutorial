@@ -162,4 +162,23 @@ public partial class CardUI : Control
 		playable = charStats.CanPlayCard(card);
 	}
 
+	public ModifierHandler GetActiveEnemyModifiers()
+	{
+		if (targets == null) return null;
+		if (targets.Count == 0) return null;
+		if (targets.Count > 1) return null;
+
+		Node firstTarget = targets[0];
+		if (firstTarget is not Enemy enemy) return null;
+
+		return enemy.modifierHandler;
+	}
+
+	public void RequestTooltip()
+	{
+		ModifierHandler enemyModifiers = GetActiveEnemyModifiers();
+		string updatedTooltip = card.GetUpdatedTooltip(playerModifiers, enemyModifiers);
+		Events.Instance.EmitSignal(Events.SignalName.CardTooltipRequested, card.icon, updatedTooltip);
+	}
+
 }

@@ -6,12 +6,12 @@ public partial class IntentUI : HBoxContainer
 {
 
     public TextureRect icon;
-    public Label number;
+    public Label label;
 
     public override void _Ready()
     {
         icon = GetNode<TextureRect>("Icon");
-        number = GetNode<Label>("Number");
+        label = GetNode<Label>("Label");
     }
 
     public void UpdateIntent(Intent intent)
@@ -24,8 +24,8 @@ public partial class IntentUI : HBoxContainer
 
         icon.Texture = intent.icon;
         icon.Visible = icon.Texture != null;
-        number.Text = string.Format("{0}", intent.number);
-        number.Visible = intent.number != null;
+        label.Text = string.Format("{0}", intent.currentText);
+        label.Visible = intent.currentText != null;
     }
 
 }

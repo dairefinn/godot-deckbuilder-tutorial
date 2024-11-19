@@ -90,4 +90,14 @@ public partial class Card : Resource
     {
     }
 
+    public virtual string GetDefaultTooltip()
+    {
+        return tooltipText;
+    }
+
+    public virtual string GetUpdatedTooltip(ModifierHandler playerModifiers, ModifierHandler enemyModifiers)
+    {
+        return tooltipText;        
+    }
+
 }

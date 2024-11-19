@@ -15,6 +15,19 @@ public partial class StatusHandler : GridContainer
 	[Export] public Node2D statusOwner;
 
 
+	public override void _Ready()
+	{
+		GuiInput += OnGuiInput;
+	}
+
+	public void OnGuiInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("left_mouse"))
+		{
+			Events.Instance.EmitSignal(Events.SignalName.StatusTooltipRequested, GetAllStatuses());
+		}
+	}
+
 	public void ApplyStatusesByType(Status.Type type)
 	{
 		if (!IsInstanceValid(this)) return;

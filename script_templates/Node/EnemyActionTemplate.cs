@@ -21,4 +21,15 @@ public partial class EnemyActionTemplate : EnemyAction
 
         Events.Instance.EmitSignal(Events.SignalName.EnemyActionCompleted, enemy);
     }
+
+    // If the enemy has dynamic intent text, you can override the base behavior here
+    // eg. for attack actions, the Player's DMG TAKEN modifier modifies the resulting damage number.
+    public override void UpdateIntentText()
+    {
+        if (target is not Player player) return;
+
+        int modifiedDamage = player.modifierHandler.GetModifiedValue(6, Modifier.Type.DMG_TAKEN);
+        intent.currentText = string.Format(intent.baseText, modifiedDamage);
+    }
+
 }

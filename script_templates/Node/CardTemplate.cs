@@ -16,4 +16,14 @@ public partial class CardTemplate : Card
         GD.Print("Targets: " + string.Join(", ", targets));
     }
 
+    public override string GetDefaultTooltip()
+    {
+        return tooltipText;
+    }
+
+    public override string GetUpdatedTooltip(ModifierHandler playerModifiers, ModifierHandler enemyModifiers)
+    {
+        return tooltipText;
+    }
+
 }

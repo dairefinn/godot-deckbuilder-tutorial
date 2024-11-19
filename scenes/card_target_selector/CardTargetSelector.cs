@@ -72,6 +72,7 @@ public partial class CardTargetSelector : Node2D
 		if (!currentCard.targets.Contains(area))
 		{
 			currentCard.targets.Add(area);
+			currentCard.RequestTooltip();
 		}
 	}
 
@@ -83,6 +84,7 @@ public partial class CardTargetSelector : Node2D
 		if (currentCard.targets.Contains(area))
 		{
 			currentCard.targets.Remove(area);
+			currentCard.RequestTooltip();
 		}
 	}
 

@@ -43,5 +43,10 @@ public partial class MuscleStatus : Status
         damageDealtModifier.AddNewValue(muscleModifierValue);
     }
 
+    public override string GetTooltip()
+    {
+        return string.Format(tooltip, stacks);
+    }
+
 }
 

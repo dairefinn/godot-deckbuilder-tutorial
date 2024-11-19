@@ -10,12 +10,12 @@
 
 [sub_resource type="Resource" id="Resource_hpaep"]
 script = ExtResource("4_dd0g0")
-number = "2x4"
+baseText = "2x{0}"
 icon = ExtResource("3_vqgsk")
 
 [sub_resource type="Resource" id="Resource_fuebu"]
 script = ExtResource("4_dd0g0")
-number = ""
+baseText = "4"
 icon = ExtResource("6_jdebr")
 
 [node name="EnemyActionPicker" type="Node"]

@@ -42,7 +42,7 @@ public partial class CardBaseState : CardState
 		if (cardUI.disabled) return;
 
 		cardUI.CardVisuals.panel.Set("theme_override_styles/panel", CardUI.HOVER_STYLEBOX);
-		Events.Instance.EmitSignal(Events.SignalName.CardTooltipRequested, cardUI.card.icon, cardUI.card.tooltipText);
+		cardUI.RequestTooltip();
     }
 
 	public override void OnMouseExited()

@@ -19,4 +19,21 @@ public partial class WarriorAxeAttack : Card
         damageEffect.Execute(targets);
     }
 
+    public override string GetDefaultTooltip()
+    {
+        return string.Format(tooltipText, baseDamage);
+    }
+
+    public override string GetUpdatedTooltip(ModifierHandler playerModifiers, ModifierHandler enemyModifiers)
+    {
+        int modifiedDamage = playerModifiers.GetModifiedValue(baseDamage, Modifier.Type.DMG_DEALT);
+
+		if (enemyModifiers != null)
+		{
+			modifiedDamage = enemyModifiers.GetModifiedValue(modifiedDamage, Modifier.Type.DMG_TAKEN);
+		}
+
+		return string.Format(tooltipText, modifiedDamage);
+    }
+
 }
