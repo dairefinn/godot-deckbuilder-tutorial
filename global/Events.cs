@@ -89,4 +89,8 @@ public partial class Events : Node
 
 	[Signal] public delegate void TreasureRoomExitedEventHandler();
 
+	// Relic related events
+
+	[Signal] public delegate void RelicTooltipRequestedEventHandler(Relic relic);
+
 }

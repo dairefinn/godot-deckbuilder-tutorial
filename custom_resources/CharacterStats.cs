@@ -16,6 +16,7 @@ public partial class CharacterStats : Stats
     [Export] public CardPile draftableCards;
     [Export] public int cardsPerTurn;
     [Export] public int maxMana;
+    [Export] public Relic startingRelic;
 
     public int mana {
         get => _mana;

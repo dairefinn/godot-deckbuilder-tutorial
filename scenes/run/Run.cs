@@ -15,6 +15,8 @@ public partial class Run : Node
 
 	public Map map;
 	public Node CurrentView;
+	public RelicHandler relicHandler;
+	public RelicTooltip relicTooltip;
 	public CardPileOpener deckButton;
 	public CardPileView deckView;
 	public HealthUI healthUI;
@@ -35,6 +37,8 @@ public partial class Run : Node
 		map = GetNode<Map>("Map");
 		CurrentView = GetNode<Node>("CurrentView");
 		deckButton = GetNode<CardPileOpener>("%DeckButton");
+		relicHandler = GetNode<RelicHandler>("%RelicHandler");
+		relicTooltip = GetNode<RelicTooltip>("%RelicTooltip");
 		deckView = GetNode<CardPileView>("%DeckView");
 		healthUI = GetNode<HealthUI>("%HealthUI");
 		goldUI = GetNode<GoldUI>("%GoldUI");
@@ -77,6 +81,10 @@ public partial class Run : Node
 		Character.StatsChanged += () => healthUI.UpdateStats(Character);
 		healthUI.UpdateStats(Character);
 		goldUI.runStats = stats;
+
+		relicHandler.AddRelic(Character.startingRelic);
+		Events.Instance.RelicTooltipRequested += relicTooltip.ShowTooltip;
+
 		deckButton.cardPile = Character.deck;
 		deckView.cardPile = Character.deck;
 		deckButton.Pressed += () => deckView.ShowCurrentView("Deck");
@@ -152,6 +160,7 @@ public partial class Run : Node
 		Battle battleScene = ChangeView(BATTLE_SCENE) as Battle;
 		battleScene.charStats = Character;
 		battleScene.battleStats = room.battleStats;
+		battleScene.relics = relicHandler;
 		battleScene.StartBattle();
 	}
 

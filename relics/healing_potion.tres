@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b6hhadl5phfp4"]
+
+[ext_resource type="Script" path="res://relics/HealingPotionRelic.cs" id="1_q0pd5"]
+[ext_resource type="Texture2D" uid="uid://boklhiqs1414d" path="res://art/tile_0115.png" id="1_ssv4b"]
+
+[resource]
+script = ExtResource("1_q0pd5")
+healAmount = 6
+relicName = "Healing potion"
+id = "healing_potion"
+type = 3
+characterType = 2
+starterRelic = true
+icon = ExtResource("1_ssv4b")
+tooltip = "[color=\"ffdf00\"]Endless healing potion[/color]
+At the end of combat, heal 6 HP."

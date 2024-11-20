@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="CharacterStats" load_steps=5 format=3 uid="uid://m2lvkcop0w2i"]
+[gd_resource type="Resource" script_class="CharacterStats" load_steps=6 format=3 uid="uid://m2lvkcop0w2i"]
 
 [ext_resource type="Resource" uid="uid://c2s306nltrp32" path="res://characters/warrior/Warrior_StartingDeck.tres" id="1_54pg1"]
 [ext_resource type="Script" path="res://custom_resources/CharacterStats.cs" id="1_vdemt"]
 [ext_resource type="Resource" uid="uid://cxsrxjrqxur5e" path="res://characters/warrior/Warrior_DraftableCards.tres" id="2_5n3cx"]
 [ext_resource type="Texture2D" uid="uid://cpydvk8mq66o5" path="res://art/tile_0087.png" id="2_s7ip6"]
+[ext_resource type="Resource" uid="uid://bf8xhb8esb8cc" path="res://relics/mana_potion.tres" id="5_sc607"]
 
 [resource]
 script = ExtResource("1_vdemt")
@@ -14,5 +15,6 @@ startingDeck = ExtResource("1_54pg1")
 draftableCards = ExtResource("2_5n3cx")
 cardsPerTurn = 4
 maxMana = 3
+startingRelic = ExtResource("5_sc607")
 maxHealth = 35
 art = ExtResource("2_s7ip6")

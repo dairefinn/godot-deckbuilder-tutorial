@@ -26,10 +26,6 @@ public partial class Player : Node2D
 		modifierHandler = GetNode<ModifierHandler>("ModifierHandler");
 
 		statusHandler.statusOwner = this;
-
-		Status exposedStatus = GD.Load<Status>("res://statuses/exposed.tres");
-		exposedStatus.duration = 3;
-		statusHandler.AddStatus(exposedStatus);
 	}
 
 	public void SetStats(CharacterStats value)
@@ -80,4 +76,5 @@ public partial class Player : Node2D
 			}
 		};
 	}
+
 }

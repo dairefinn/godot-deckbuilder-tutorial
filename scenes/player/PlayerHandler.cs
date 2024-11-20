@@ -1,3 +1,11 @@
+// Player turn order:
+// 1. START_OF_TURN Relics
+// 2. START_OF_TURN Statuses
+// 3. Draw hand
+// 4. End turn
+// 5. END_OF_TURN Relics
+// 6. END_OF_TURN Statuses
+// 7. Discard hand
 namespace DeckBuilder;
 
 using Godot;
@@ -8,6 +16,7 @@ public partial class PlayerHandler : Node
 	const float HAND_DRAW_INTERVAL = 0.25f;
 	const float HAND_DISCARD_INTERVAL = 0.25f;
 
+	[Export] public RelicHandler relics;
 	[Export] public Player player;
 	[Export] public Hand hand;
 
@@ -24,6 +33,7 @@ public partial class PlayerHandler : Node
 		character.drawPile = character.deck.Duplicate(true) as CardPile;
 		character.drawPile.Shuffle();
 		character.discard = new CardPile();
+		relics.RelicsActivated += OnRelicsActivated;
 		player.statusHandler.StatusesApplied += OnStatusesApplied;
 		StartTurn();
 	}
@@ -32,13 +42,13 @@ public partial class PlayerHandler : Node
 	{
 		character.block = 0;
 		character.ResetMana();
-		player.statusHandler.ApplyStatusesByType(Status.Type.START_OF_TURN);
+		relics.ActivateRelicsByType(Relic.Type.START_OF_TURN);
 	}
 
 	public void EndTurn()
 	{
 		hand.DisableHand();
-		player.statusHandler.ApplyStatusesByType(Status.Type.END_OF_TURN);
+		relics.ActivateRelicsByType(Relic.Type.END_OF_TURN);
 	}
 
 	public void DiscardCards()
@@ -117,6 +127,19 @@ public partial class PlayerHandler : Node
 				break;
 			case Status.Type.END_OF_TURN:
 				DiscardCards();
+				break;
+		}
+	}
+
+	public void OnRelicsActivated(Relic.Type type)
+	{
+		switch (type)
+		{
+			case Relic.Type.START_OF_TURN:
+				player.statusHandler.ApplyStatusesByType(Status.Type.START_OF_TURN);
+				break;
+			case Relic.Type.END_OF_TURN:
+				player.statusHandler.ApplyStatusesByType(Status.Type.END_OF_TURN);
 				break;
 		}
 	}
