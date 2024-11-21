@@ -6,7 +6,7 @@ using Godot;
 public partial class RunStats : Resource
 {
 
-    public static readonly int STARTING_GOLD = 70;
+    public static readonly int STARTING_GOLD = 700;
     public static readonly float BASE_CARD_REWARDS = 3;
     public static readonly float BASE_COMMON_WEIGHT = 6.0f;
     public static readonly float BASE_UNCOMMON_WEIGHT = 3.7f;

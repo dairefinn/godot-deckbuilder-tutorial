@@ -14,6 +14,8 @@ public partial class CardPileOpener : TextureButton
 
     public void SetCardPile(CardPile value)
     {
+        if (!IsInstanceValid(this)) return;
+
         _cardPile = value;
 
         if (!_cardPile.IsConnected(CardPile.SignalName.CardPileSizeChanged, new Callable(this, MethodName.OnCardPileSizeChanged)))

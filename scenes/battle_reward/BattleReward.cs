@@ -1,6 +1,6 @@
-using System.Linq;
-using DeckBuilder;
+namespace DeckBuilder;
 
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -16,6 +16,7 @@ public partial class BattleReward : Control
 
     [Export] public RunStats runStats;
     [Export] public CharacterStats characterStats;
+    [Export] public RelicHandler relicHandler;
 
     public Button backButton;
     public VBoxContainer rewards;
@@ -63,6 +64,17 @@ public partial class BattleReward : Control
         rewards.CallDeferred(VBoxContainer.MethodName.AddChild, cardReward);
     }
 
+    public void AddRelicReward(Relic relic)
+    {
+        RewardButton relicReward = REWARD_BUTTON.Instantiate<RewardButton>();
+        relicReward.rewardIcon = relic.icon;
+        relicReward.rewardText = relic.relicName;
+        relicReward.Pressed += () => {
+            OnRelicRewardTaken(relic);
+        };
+        rewards.CallDeferred(VBoxContainer.MethodName.AddChild, relicReward);
+    }
+
     public void OnGoldRewardTaken(int amount)
     {
         if (runStats == null) return;
@@ -101,6 +113,14 @@ public partial class BattleReward : Control
 
         cardRewards.rewards = cardRewardArray;
         cardRewards.Show();
+    }
+
+    public void OnRelicRewardTaken(Relic relic)
+    {
+        if (relic == null) return;
+        if (relicHandler == null) return;
+
+        relicHandler.AddRelic(relic);
     }
 
     public void OnCardRewardTaken(Card card)

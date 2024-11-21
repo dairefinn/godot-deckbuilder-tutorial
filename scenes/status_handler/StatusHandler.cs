@@ -20,7 +20,7 @@ public partial class StatusHandler : GridContainer
 		GuiInput += OnGuiInput;
 	}
 
-	public void OnGuiInput(InputEvent @event)
+    public void OnGuiInput(InputEvent @event)
 	{
 		if (@event.IsActionPressed("left_mouse"))
 		{

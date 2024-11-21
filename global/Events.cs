@@ -75,7 +75,10 @@ public partial class Events : Node
 
 	// Shop related events
 
+	[Signal] public delegate void ShopEnteredEventHandler(Shop shop);
 	[Signal] public delegate void ShopExitedEventHandler();
+	[Signal] public delegate void ShopCardBoughtEventHandler(Card card, int goldCost);
+	[Signal] public delegate void ShopRelicBoughtEventHandler(Relic relic, int goldCost);
 
 	// Campfire related events
 
@@ -87,7 +90,7 @@ public partial class Events : Node
 
 	// Treasure room related events
 
-	[Signal] public delegate void TreasureRoomExitedEventHandler();
+	[Signal] public delegate void TreasureRoomExitedEventHandler(Relic foundRelic);
 
 	// Relic related events
 

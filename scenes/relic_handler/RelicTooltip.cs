@@ -1,4 +1,4 @@
-using DeckBuilder;
+namespace DeckBuilder;
 
 using Godot;
 

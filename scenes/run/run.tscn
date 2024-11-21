@@ -80,11 +80,13 @@ layout_mode = 2
 
 [node name="HealthUI" parent="TopBar/MarginContainer/BarItems" instance=ExtResource("4_awdrt")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 showMaxHealth = true
 
 [node name="GoldUI" parent="TopBar/MarginContainer/BarItems" instance=ExtResource("4_rbc21")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
 [node name="RelicHandlerContainer" type="CenterContainer" parent="TopBar/MarginContainer/BarItems"]

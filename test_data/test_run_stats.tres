@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RunStats" load_steps=2 format=3 uid="uid://dpu5jlx0yabrm"]
+
+[ext_resource type="Script" path="res://custom_resources/RunStats.cs" id="1_0s7a0"]
+
+[resource]
+script = ExtResource("1_0s7a0")
+gold = 80
+cardRewards = 3.0
+commonWeight = 6.0
+uncommonWeight = 3.7
+rareWeight = 0.3

@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://ivkj3yltinbh"]
+
+[ext_resource type="PackedScene" uid="uid://catqmcryuejjj" path="res://scenes/ui/card_menu_ui.tscn" id="1_4gsb8"]
+[ext_resource type="Script" path="res://scenes/shop/ShopCard.cs" id="1_k4m0h"]
+[ext_resource type="Texture2D" uid="uid://d0p08vf3mna00" path="res://art/gold.png" id="2_raol0"]
+[ext_resource type="Resource" uid="uid://bubc8klghmdbl" path="res://characters/warrior/cards/Warrior_TrueStrength.tres" id="2_tsh70"]
+
+[node name="ShopCard" type="VBoxContainer"]
+custom_minimum_size = Vector2(40, 56)
+offset_right = 40.0
+offset_bottom = 56.0
+theme_override_constants/separation = 2
+script = ExtResource("1_k4m0h")
+card = ExtResource("2_tsh70")
+
+[node name="CardsContainer" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CardMenuUI" parent="CardsContainer" instance=ExtResource("1_4gsb8")]
+layout_mode = 2
+
+[node name="Price" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="PriceLabel" type="Label" parent="Price"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "999"
+
+[node name="GoldIcon" type="TextureRect" parent="Price"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+texture = ExtResource("2_raol0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BuyButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+text = "Buy"

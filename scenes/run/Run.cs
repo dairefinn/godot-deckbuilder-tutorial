@@ -122,7 +122,7 @@ public partial class Run : Node
 		Events.Instance.BattleRewardExited += () => ShowMap();
 		Events.Instance.CampfireExited += () => ShowMap();
 		Events.Instance.ShopExited += () => ShowMap();
-		Events.Instance.TreasureRoomExited += () => ShowMap();
+		Events.Instance.TreasureRoomExited += OnTreasureRoomExited;
 
 		Events.Instance.BattleWon += OnBattleWon;
 		Events.Instance.MapExited += OnMapExited;
@@ -144,16 +144,17 @@ public partial class Run : Node
 				OnBattleRoomEntered(room);
 				break;
 			case Room.Type.TREASURE:
-				ChangeView(TREASURE_SCENE);
+				OnTreasureRoomEntered();
 				break;
 			case Room.Type.CAMPFIRE:
 				OnCampfireRoomEntered();
 				break;
 			case Room.Type.SHOP:
-				ChangeView(SHOP_SCENE);
+				OnShopEntered();
 				break;
 		}
 	}
+
 
 	public void OnBattleRoomEntered(Room room)
 	{
@@ -164,10 +165,38 @@ public partial class Run : Node
 		battleScene.StartBattle();
 	}
 
+	public void OnTreasureRoomEntered()
+	{
+		Treasure treasureScene = ChangeView(TREASURE_SCENE) as Treasure;
+		treasureScene.relicHandler = relicHandler;
+		treasureScene.charStats = Character;
+		treasureScene.GenerateRelic();
+	}
+
 	public void OnCampfireRoomEntered()
 	{
 		Campfire campfireScene = ChangeView(CAMPFIRE_SCENE) as Campfire;
 		campfireScene.charStats = Character;
+	}
+
+	public void OnShopEntered()
+	{
+		Shop shop = ChangeView(SHOP_SCENE) as Shop;
+		shop.charStats = Character;
+		shop.runStats = stats;
+		shop.relicHandler = relicHandler;
+		Events.Instance.EmitSignal(Events.SignalName.ShopEntered, shop);
+		shop.PopulateShop();
+	}
+
+	public void OnTreasureRoomExited(Relic relic)
+	{
+		BattleReward rewardScene = ChangeView(BATTLE_REWARD_SCENE) as BattleReward;
+		rewardScene.runStats = stats;
+		rewardScene.characterStats = Character;
+		rewardScene.relicHandler = relicHandler;
+
+		rewardScene.AddRelicReward(relic);
 	}
 
 	public void OnBattleWon()

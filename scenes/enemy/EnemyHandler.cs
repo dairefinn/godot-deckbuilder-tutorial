@@ -109,6 +109,8 @@ public partial class EnemyHandler : Node2D
 
 	public void OnPlayerHandDrawn()
 	{
+		if (!IsInstanceValid(this)) return;
+
 		foreach (Node enemyNode in GetChildren())
 		{
 			if (enemyNode is not Enemy enemy) continue;
