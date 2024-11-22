@@ -1,0 +1,49 @@
+[gd_scene load_steps=14 format=3 uid="uid://kkipg8xgww3f"]
+
+[ext_resource type="Script" path="res://scenes/enemy/EnemyActionPicker.cs" id="1_q0rp5"]
+[ext_resource type="Script" path="res://enemies/toxic_ghost/ToxicGhostMuscleBuffAction.cs" id="2_dme1u"]
+[ext_resource type="Texture2D" uid="uid://cn2c1psh561cc" path="res://art/tile_0127.png" id="3_p2tbp"]
+[ext_resource type="Script" path="res://custom_resources/Intent.cs" id="4_yb0lg"]
+[ext_resource type="AudioStream" uid="uid://k8m4o3hlwm7l" path="res://art/enemy_block.ogg" id="5_1w622"]
+[ext_resource type="Script" path="res://enemies/toxic_ghost/ToxicGhostAttackAction.cs" id="6_lsnyl"]
+[ext_resource type="Texture2D" uid="uid://bpupd3q80sb14" path="res://art/attack_negative.png" id="7_vqxm7"]
+[ext_resource type="AudioStream" uid="uid://de2ryat1pxq6" path="res://art/enemy_attack.ogg" id="8_7u6pv"]
+[ext_resource type="Script" path="res://enemies/toxic_ghost/ToxicGhostBlockAction.cs" id="9_hlfg4"]
+[ext_resource type="Texture2D" uid="uid://oe7v35ii8vrs" path="res://art/tile_0102.png" id="10_voa22"]
+
+[sub_resource type="Resource" id="Resource_uea2h"]
+script = ExtResource("4_yb0lg")
+baseText = ""
+icon = ExtResource("3_p2tbp")
+
+[sub_resource type="Resource" id="Resource_3v2cj"]
+script = ExtResource("4_yb0lg")
+baseText = "{0}"
+icon = ExtResource("7_vqxm7")
+
+[sub_resource type="Resource" id="Resource_pyxci"]
+script = ExtResource("4_yb0lg")
+baseText = ""
+icon = ExtResource("10_voa22")
+
+[node name="ToxicGhostAI" type="Node"]
+script = ExtResource("1_q0rp5")
+
+[node name="MuscleBuffAction" type="Node" parent="."]
+script = ExtResource("2_dme1u")
+intent = SubResource("Resource_uea2h")
+sound = ExtResource("5_1w622")
+
+[node name="AttackAction" type="Node" parent="."]
+script = ExtResource("6_lsnyl")
+intent = SubResource("Resource_3v2cj")
+type = 1
+chanceWeight = 6.5
+sound = ExtResource("8_7u6pv")
+
+[node name="BlockAction" type="Node" parent="."]
+script = ExtResource("9_hlfg4")
+intent = SubResource("Resource_pyxci")
+type = 1
+chanceWeight = 3.5
+sound = ExtResource("5_1w622")

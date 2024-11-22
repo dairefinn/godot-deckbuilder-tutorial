@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=4 format=3 uid="uid://dml4fixhy6ca4"]
+
+[ext_resource type="PackedScene" uid="uid://kkipg8xgww3f" path="res://enemies/toxic_ghost/toxic_ghost_ai.tscn" id="1_deoi7"]
+[ext_resource type="Texture2D" uid="uid://c24y6l0ivlqp7" path="res://art/tile_0108.png" id="1_s56px"]
+[ext_resource type="Script" path="res://custom_resources/EnemyStats.cs" id="1_x8uq3"]
+
+[resource]
+script = ExtResource("1_x8uq3")
+ai = ExtResource("1_deoi7")
+maxHealth = 40
+art = ExtResource("1_s56px")

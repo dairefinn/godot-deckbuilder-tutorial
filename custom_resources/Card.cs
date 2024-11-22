@@ -9,7 +9,7 @@ public partial class Card : Resource
 
     public enum Type {
         ATTACK = 0,
-        DEFEND = 1,
+        SKILL = 1,
         POWER = 2
     }
 

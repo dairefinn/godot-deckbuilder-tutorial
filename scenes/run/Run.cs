@@ -10,6 +10,7 @@ public partial class Run : Node
 	private PackedScene CAMPFIRE_SCENE = GD.Load<PackedScene>("res://scenes/campfire/campfire.tscn");
 	private PackedScene SHOP_SCENE = GD.Load<PackedScene>("res://scenes/shop/shop.tscn");
 	private PackedScene TREASURE_SCENE = GD.Load<PackedScene>("res://scenes/treasure/treasure.tscn");
+	private PackedScene WIN_SCREEN_SCENE = GD.Load<PackedScene>("res://scenes/win_screen/win_screen.tscn");
 
 	[Export] RunStartup runStartup;
 
@@ -30,7 +31,7 @@ public partial class Run : Node
 	public Button TreasureButton;
 
 	public RunStats stats;
-	public CharacterStats Character;
+	public CharacterStats character;
 
     public override void _Ready()
     {
@@ -58,7 +59,7 @@ public partial class Run : Node
 		switch(runStartup.type)
 		{
 			case RunStartup.Type.NEW_RUN:
-				Character = runStartup.pickedCharacter.CreateInstance();
+				character = runStartup.pickedCharacter.CreateInstance();
 				StartRun();
 				break;
 			case RunStartup.Type.CONTINUED_RUN:
@@ -67,7 +68,15 @@ public partial class Run : Node
 		}
     }
 
-	public void StartRun()
+    public override void _Input(InputEvent @event)
+    {
+		if (@event.IsActionPressed("cheat"))
+		{
+			GetTree().CallGroup("enemies", "queue_free");
+		}
+    }
+
+    public void StartRun()
 	{
 		stats = new RunStats();
 		SetupEventConnections();
@@ -78,16 +87,26 @@ public partial class Run : Node
 
 	public void SetupTopBar()
 	{
-		Character.StatsChanged += () => healthUI.UpdateStats(Character);
-		healthUI.UpdateStats(Character);
+		character.StatsChanged += () => healthUI.UpdateStats(character);
+		healthUI.UpdateStats(character);
 		goldUI.runStats = stats;
 
-		relicHandler.AddRelic(Character.startingRelic);
+		relicHandler.AddRelic(character.startingRelic);
 		Events.Instance.RelicTooltipRequested += relicTooltip.ShowTooltip;
 
-		deckButton.cardPile = Character.deck;
-		deckView.cardPile = Character.deck;
+		deckButton.cardPile = character.deck;
+		deckView.cardPile = character.deck;
 		deckButton.Pressed += () => deckView.ShowCurrentView("Deck");
+	}
+
+	public void ShowRegularBattleRewards()
+	{
+		BattleReward rewardScene = ChangeView(BATTLE_REWARD_SCENE) as BattleReward;
+		rewardScene.runStats = stats;
+		rewardScene.characterStats = character;
+
+		rewardScene.AddGoldReward(map.lastRoom.battleStats.RollGoldReward());
+		rewardScene.AddCardReward();
 	}
 
 	public Node ChangeView(PackedScene scene)
@@ -159,7 +178,7 @@ public partial class Run : Node
 	public void OnBattleRoomEntered(Room room)
 	{
 		Battle battleScene = ChangeView(BATTLE_SCENE) as Battle;
-		battleScene.charStats = Character;
+		battleScene.charStats = character;
 		battleScene.battleStats = room.battleStats;
 		battleScene.relics = relicHandler;
 		battleScene.StartBattle();
@@ -169,20 +188,20 @@ public partial class Run : Node
 	{
 		Treasure treasureScene = ChangeView(TREASURE_SCENE) as Treasure;
 		treasureScene.relicHandler = relicHandler;
-		treasureScene.charStats = Character;
+		treasureScene.charStats = character;
 		treasureScene.GenerateRelic();
 	}
 
 	public void OnCampfireRoomEntered()
 	{
 		Campfire campfireScene = ChangeView(CAMPFIRE_SCENE) as Campfire;
-		campfireScene.charStats = Character;
+		campfireScene.charStats = character;
 	}
 
 	public void OnShopEntered()
 	{
 		Shop shop = ChangeView(SHOP_SCENE) as Shop;
-		shop.charStats = Character;
+		shop.charStats = character;
 		shop.runStats = stats;
 		shop.relicHandler = relicHandler;
 		Events.Instance.EmitSignal(Events.SignalName.ShopEntered, shop);
@@ -193,7 +212,7 @@ public partial class Run : Node
 	{
 		BattleReward rewardScene = ChangeView(BATTLE_REWARD_SCENE) as BattleReward;
 		rewardScene.runStats = stats;
-		rewardScene.characterStats = Character;
+		rewardScene.characterStats = character;
 		rewardScene.relicHandler = relicHandler;
 
 		rewardScene.AddRelicReward(relic);
@@ -201,12 +220,15 @@ public partial class Run : Node
 
 	public void OnBattleWon()
 	{
-		BattleReward rewardScene = ChangeView(BATTLE_REWARD_SCENE) as BattleReward;
-		rewardScene.runStats = stats;
-		rewardScene.characterStats = Character;
-
-		rewardScene.AddGoldReward(map.lastRoom.battleStats.RollGoldReward());
-		rewardScene.AddCardReward();
+		if (map.floorsClimbed == MapGenerator.FLOORS)
+		{
+			WinScreen winScreen = ChangeView(WIN_SCREEN_SCENE) as WinScreen;
+			winScreen.character = character;
+		}
+		else
+		{
+			ShowRegularBattleRewards();
+		}
 	}
 
 }

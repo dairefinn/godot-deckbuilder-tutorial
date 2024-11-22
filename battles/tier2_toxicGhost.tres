@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BattleStats" load_steps=3 format=3 uid="uid://bwevrvaoj0m40"]
+
+[ext_resource type="Script" path="res://custom_resources/BattleStats.cs" id="1_o4fsh"]
+[ext_resource type="PackedScene" uid="uid://dwcy4iwk8c6pw" path="res://battles/tier2_toxicGhost.tscn" id="1_xxx20"]
+
+[resource]
+script = ExtResource("1_o4fsh")
+battleTier = 2
+weight = 1.0
+goldRewardMin = 0
+goldRewardMax = 0
+enemies = ExtResource("1_xxx20")
