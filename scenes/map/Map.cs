@@ -80,7 +80,7 @@ public partial class Map : Node2D
         visuals.Position = new Vector2((GetViewportRect().Size.X - mapWidthPixels) / 2, GetViewportRect().Size.Y / 2);
     }
 
-    public void UnlockFloor(int floor)
+    public void UnlockFloor(int floor = 0)
     {
         foreach (Node mapRoomNode in rooms.GetChildren())
         {
@@ -157,6 +157,22 @@ public partial class Map : Node2D
         lastRoom = room;
         floorsClimbed += 1;
         Events.Instance.EmitSignal(Events.SignalName.MapExited, room);
+    }
+
+    public void LoadMap(Array<Array<Room>> map, int floorCompleted, Room lastRoomClimbed)
+    {
+        floorsClimbed = floorCompleted;
+        mapData = map;
+        lastRoom = lastRoomClimbed;
+        CreateMap();
+
+        if (floorsClimbed > 0)
+        {
+            UnlockNextRooms();
+        }
+        else {
+            UnlockFloor();
+        }
     }
 
 }

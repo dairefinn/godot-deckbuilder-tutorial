@@ -96,7 +96,7 @@ public partial class BattleReward : Control
         for (int i = 0; i < runStats.cardRewards; i++)
         {
             SetupCardChances();
-            float roll = (float)GD.RandRange(0.0f, cardRewardTotalWeight);
+            float roll = RNG.Instance.RandfRange(0.0f, cardRewardTotalWeight);
 
             foreach (Card.Rarity rarity in cardRewardWeights.Keys)
             {
@@ -155,7 +155,7 @@ public partial class BattleReward : Control
         // .Filter doesn't exist in the C# version of Godot.Collections.Array so we fall back to LINQ
         Card[] allPossibleCards = availableCards.Where(card => card.rarity == withRarity).ToArray();
         Array<Card> allPossibleCardsArray = new(allPossibleCards);
-        return allPossibleCardsArray.PickRandom();
+        return RNG.ArrayPickRandom(allPossibleCardsArray);
     }
 
     public void OnBackButtonPressed()

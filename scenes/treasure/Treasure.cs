@@ -39,7 +39,7 @@ public partial class Treasure : Control
             return;
         }
 
-        foundRelic = availableRelics.PickRandom();
+        foundRelic = RNG.ArrayPickRandom(availableRelics);
     }
 
     // Called from the AnimationPlayer at the end of the 'open' animation

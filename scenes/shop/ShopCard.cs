@@ -17,7 +17,7 @@ public partial class ShopCard : VBoxContainer
 	public HBoxContainer price;
 	public Label priceLabel;
 	public Button buyButton;
-	public int goldCost = GD.RandRange(100, 300);
+	public int goldCost = RNG.Instance.RandiRange(100, 300);
 
 	public CardMenuUI currentCardUI;
 

@@ -11,17 +11,19 @@ public partial class Run : Node
 	private PackedScene SHOP_SCENE = GD.Load<PackedScene>("res://scenes/shop/shop.tscn");
 	private PackedScene TREASURE_SCENE = GD.Load<PackedScene>("res://scenes/treasure/treasure.tscn");
 	private PackedScene WIN_SCREEN_SCENE = GD.Load<PackedScene>("res://scenes/win_screen/win_screen.tscn");
+	public static readonly string MAIN_MENU_PATH = "res://scenes/ui/main_menu.tscn";
 
 	[Export] RunStartup runStartup;
 
 	public Map map;
 	public Node CurrentView;
+	public HealthUI healthUI;
+	public GoldUI goldUI;
 	public RelicHandler relicHandler;
 	public RelicTooltip relicTooltip;
 	public CardPileOpener deckButton;
 	public CardPileView deckView;
-	public HealthUI healthUI;
-	public GoldUI goldUI;
+	public PauseMenu pauseMenu;
 
 	public Button BattleButton;
 	public Button CampfireButton;
@@ -32,17 +34,19 @@ public partial class Run : Node
 
 	public RunStats stats;
 	public CharacterStats character;
+	public SaveGame saveData;
 
     public override void _Ready()
     {
 		map = GetNode<Map>("Map");
 		CurrentView = GetNode<Node>("CurrentView");
+		healthUI = GetNode<HealthUI>("%HealthUI");
+		goldUI = GetNode<GoldUI>("%GoldUI");
 		deckButton = GetNode<CardPileOpener>("%DeckButton");
 		relicHandler = GetNode<RelicHandler>("%RelicHandler");
 		relicTooltip = GetNode<RelicTooltip>("%RelicTooltip");
 		deckView = GetNode<CardPileView>("%DeckView");
-		healthUI = GetNode<HealthUI>("%HealthUI");
-		goldUI = GetNode<GoldUI>("%GoldUI");
+		pauseMenu = GetNode<PauseMenu>("PauseMenu");
 
 		BattleButton = GetNode<Button>("%BattleButton");
 		CampfireButton = GetNode<Button>("%CampfireButton");
@@ -56,6 +60,10 @@ public partial class Run : Node
 			return;
 		}
 
+		pauseMenu.SaveAndQuit += () => {
+			GetTree().ChangeSceneToFile(MAIN_MENU_PATH);
+		};
+
 		switch(runStartup.type)
 		{
 			case RunStartup.Type.NEW_RUN:
@@ -63,17 +71,17 @@ public partial class Run : Node
 				StartRun();
 				break;
 			case RunStartup.Type.CONTINUED_RUN:
-				GD.Print("TODO: Load previous run");
+				LoadRun();
 				break;
 		}
     }
 
     public override void _Input(InputEvent @event)
     {
-		if (@event.IsActionPressed("cheat"))
-		{
-			GetTree().CallGroup("enemies", "queue_free");
-		}
+		// if (@event.IsActionPressed("cheat"))
+		// {
+		// 	GetTree().CallGroup("enemies", "queue_free");
+		// }
     }
 
     public void StartRun()
@@ -83,6 +91,50 @@ public partial class Run : Node
 		SetupTopBar();
 		map.GenerateNewMap();
 		map.UnlockFloor(0);
+
+		saveData = new SaveGame();
+		SaveRun(true);
+	}
+
+	public void SaveRun(bool wasOnMap)
+	{
+		saveData.rngSeed = RNG.Instance.Seed;
+		saveData.rngState = RNG.Instance.State;
+		saveData.runStats = stats;
+		saveData.charStats = character;
+		saveData.currentDeck = character.deck;
+		saveData.currentHealth = character.health;
+		saveData.relics = relicHandler.GetAllRelics();
+		saveData.lastRoom = map.lastRoom;
+		saveData.mapData = map.mapData.Duplicate();
+		saveData.floorsClimbed = map.floorsClimbed;
+		saveData.wasOnMap = wasOnMap;
+		saveData.SaveData();
+	}
+
+	public void LoadRun()
+	{
+		saveData = SaveGame.LoadData();
+		if (saveData == null)
+		{
+			GD.PrintErr("Couldn't load last save");
+			return;
+		}
+
+		RNG.SetFromSaveData(saveData.rngSeed, saveData.rngState);
+		stats = saveData.runStats;
+		character = saveData.charStats;
+		character.deck = saveData.currentDeck;
+		character.health = saveData.currentHealth;
+		relicHandler.AddRelics(saveData.relics);
+		SetupTopBar();
+		SetupEventConnections();
+
+		map.LoadMap(saveData.mapData, saveData.floorsClimbed, saveData.lastRoom);
+		if (saveData.lastRoom != null && saveData.wasOnMap)
+		{
+			OnMapExited(saveData.lastRoom);
+		}
 	}
 
 	public void SetupTopBar()
@@ -134,6 +186,8 @@ public partial class Run : Node
 
 		map.ShowMap();
 		map.UnlockNextRooms();
+
+		SaveRun(true);
 	}
 
 	public void SetupEventConnections()
@@ -156,6 +210,8 @@ public partial class Run : Node
 
 	public void OnMapExited(Room room)
 	{
+		SaveRun(false);
+
 		switch (room.type)
 		{
 			case Room.Type.MONSTER:
@@ -224,6 +280,7 @@ public partial class Run : Node
 		{
 			WinScreen winScreen = ChangeView(WIN_SCREEN_SCENE) as WinScreen;
 			winScreen.character = character;
+			SaveGame.DeleteData();
 		}
 		else
 		{

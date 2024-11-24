@@ -16,7 +16,7 @@ public partial class BattleStats : Resource
 
     public int RollGoldReward()
     {
-        return GD.RandRange(goldRewardMin, goldRewardMax);
+        return RNG.Instance.RandiRange(goldRewardMin, goldRewardMax);
     }
 
 }

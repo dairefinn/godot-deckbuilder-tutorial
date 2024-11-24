@@ -42,7 +42,7 @@ public partial class CardPile : Resource
 
     public void Shuffle()
     {
-        cards.Shuffle();
+        RNG.ArrayShuffle(cards);
     }
 
     public override string ToString()

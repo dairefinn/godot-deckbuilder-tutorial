@@ -71,7 +71,7 @@ public partial class CardPileView : Control
 
         if (randomized)
         {
-            allCards.Shuffle();
+            RNG.ArrayShuffle(allCards);
         }
 
         foreach (Card card in allCards)

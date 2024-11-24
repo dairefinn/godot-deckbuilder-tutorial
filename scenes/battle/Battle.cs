@@ -74,6 +74,7 @@ public partial class Battle : Node2D
 	public void OnPlayerDied()
 	{
 		Events.Instance.EmitSignal(Events.SignalName.BattleOverScreenRequested, "You lose!", (int)BattleOverPanel.Type.LOSE);
+		SaveGame.DeleteData();
 	}
 
 }

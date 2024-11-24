@@ -6,6 +6,9 @@ public partial class MainMenu : Control
 {
 
     private PackedScene CHARACTER_SELECT_SCENE = GD.Load<PackedScene>("res://scenes/ui/character_selector.tscn");
+    private PackedScene RUN_SCENE = GD.Load<PackedScene>("res://scenes/run/run.tscn");
+
+    [Export] public RunStartup runStartup;
 
     public Button ButtonContinue;
     public Button ButtonNewRun;
@@ -22,11 +25,14 @@ public partial class MainMenu : Control
         ButtonContinue.Pressed += OnContinuePressed;
         ButtonNewRun.Pressed += OnNewRunPressed;
         ButtonExit.Pressed += OnExitPressed;
+
+        ButtonContinue.Disabled = SaveGame.LoadData() == null;
     }
 
     public void OnContinuePressed()
     {
-        GD.Print("Continue run");
+        runStartup.type = RunStartup.Type.CONTINUED_RUN;
+        GetTree().ChangeSceneToPacked(RUN_SCENE);
     }
 
     public void OnNewRunPressed()

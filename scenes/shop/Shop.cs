@@ -84,7 +84,7 @@ public partial class Shop : Control
     {
         Array<Card> shopCardArray = new();
         Array<Card> availableCards = charStats.draftableCards.cards.Duplicate(true);
-        availableCards.Shuffle();
+        RNG.ArrayShuffle(availableCards);
         shopCardArray = availableCards[..3];
 
         foreach (Card card in shopCardArray)
@@ -106,7 +106,7 @@ public partial class Shop : Control
             bool alreadyHadIt = relicHandler.HasRelic(relic.id);
             return canAppear && !alreadyHadIt;
         }));
-        availableRelics.Shuffle();
+        RNG.ArrayShuffle(availableRelics);
         shopRelicArray = availableRelics[..3];
 
         foreach (Relic relic in shopRelicArray)

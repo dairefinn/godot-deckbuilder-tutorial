@@ -70,7 +70,7 @@ public partial class EnemyActionPicker : Node
 
 	public EnemyAction GetChanceBasedAction()
 	{
-		float roll = (float)GD.RandRange(0.0f, totalWeight);
+		float roll = RNG.Instance.RandfRange(0.0f, totalWeight);
 
 		foreach (Node child in GetChildren())
 		{
