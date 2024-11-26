@@ -1,6 +1,6 @@
-using Godot;
-
 namespace DeckBuilder;
+
+using Godot;
 
 public partial class CardReleasedState : CardState
 {
@@ -19,14 +19,9 @@ public partial class CardReleasedState : CardState
 		}
 	}
 
-	public override void OnInput(InputEvent @event)
-	{
-		if (played)
-		{
-			return;
-		}
-
+    public override void PostEnter()
+    {
 		EmitSignal(SignalName.TransitionRequested, this, (int)CardState.State.BASE);
-	}
+    }
 
 }

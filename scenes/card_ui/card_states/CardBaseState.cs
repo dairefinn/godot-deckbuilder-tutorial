@@ -1,9 +1,11 @@
-using Godot;
-
 namespace DeckBuilder;
+
+using Godot;
 
 public partial class CardBaseState : CardState
 {
+
+	private bool mouseOverCard = false;
 
     public override async void Enter()
 	{
@@ -29,7 +31,7 @@ public partial class CardBaseState : CardState
 		if (!cardUI.playable) return;
 		if (cardUI.disabled) return;
 
-		if (@event.IsActionPressed("left_mouse"))
+		if (mouseOverCard && @event.IsActionPressed("left_mouse"))
 		{
 			cardUI.PivotOffset = cardUI.GetGlobalMousePosition() - cardUI.GlobalPosition;
 			EmitSignal(SignalName.TransitionRequested, this, (int)CardState.State.CLICKED);
@@ -38,6 +40,8 @@ public partial class CardBaseState : CardState
 
     public override void OnMouseEntered()
     {
+		mouseOverCard = true;
+
 		if (!cardUI.playable) return;
 		if (cardUI.disabled) return;
 
@@ -47,6 +51,8 @@ public partial class CardBaseState : CardState
 
 	public override void OnMouseExited()
 	{
+		mouseOverCard = false;
+
 		if (!cardUI.playable) return;
 		if (cardUI.disabled) return;
 

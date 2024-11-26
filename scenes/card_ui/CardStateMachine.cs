@@ -77,6 +77,7 @@ public partial class CardStateMachine : Node
 
 		newState.Enter();
 		currentState = newState;
+		newState.PostEnter();
 	}
 
 }

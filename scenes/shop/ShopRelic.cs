@@ -38,7 +38,7 @@ public partial class ShopRelic : VBoxContainer
 
 		priceLabel.Text = goldCost.ToString();
 
-		if (runStats.gold > goldCost)
+		if (runStats.gold >= goldCost)
 		{
 			priceLabel.RemoveThemeColorOverride("font_color");
 			buyButton.Disabled = false;

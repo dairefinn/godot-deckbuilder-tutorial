@@ -1,6 +1,6 @@
-using Godot;
-
 namespace DeckBuilder;
+
+using Godot;
 
 public partial class CardState : Node
 {
@@ -23,6 +23,12 @@ public partial class CardState : Node
 
     public virtual void Enter()
     {
+        // Replace with function body
+    }
+
+    public virtual void PostEnter()
+    {
+        // Replace with function body
     }
 
     public virtual void Exit()

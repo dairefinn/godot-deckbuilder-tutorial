@@ -30,7 +30,7 @@ public partial class PlayerHandler : Node
 	public void StartBattle(CharacterStats stats)
 	{
 		character = stats;
-		character.drawPile = character.deck.Duplicate(true) as CardPile;
+		character.drawPile = character.deck.CustomDuplicate();
 		character.drawPile.Shuffle();
 		character.discard = new CardPile();
 		relics.RelicsActivated += OnRelicsActivated;

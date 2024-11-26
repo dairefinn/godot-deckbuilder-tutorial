@@ -31,6 +31,8 @@ public partial class RNG : Node
 
 	public static T ArrayPickRandom<[MustBeVariant] T>(Array<T> array) where T : class
 	{
+		if (array.Count == 0) return null;
+
 		return array[(int)(Instance.Randi() % (ulong)array.Count)] as T;
 	}
 

@@ -4,6 +4,8 @@ using Godot;
 
 public partial class BattleOverPanel : Panel
 {
+
+	public static readonly string MAIN_MENU = "res://scenes/ui/main_menu.tscn";
 	
 	public enum Type {
 		WIN,
@@ -12,16 +14,16 @@ public partial class BattleOverPanel : Panel
 
 	public Label label;
 	public Button continueButton;
-	public Button restartButton;
+	public Button mainMenuButton;
 
     public override void _Ready()
     {
         label = GetNode<Label>("%Label");
 		continueButton = GetNode<Button>("%ContinueButton");
-		restartButton = GetNode<Button>("%RestartButton");
+		mainMenuButton = GetNode<Button>("%MainMenuButton");
 
 		continueButton.Pressed += OnContinueButtonPressed;
-		restartButton.Pressed += OnRestartButtonPressed;
+		mainMenuButton.Pressed += OnMainMenuButtonPressed;
 
 		Events.Instance.BattleOverScreenRequested += ShowScreen;
     }
@@ -31,20 +33,20 @@ public partial class BattleOverPanel : Panel
 		Events.Instance.EmitSignal(Events.SignalName.BattleWon);
 	}
 
-	public void OnRestartButtonPressed()
+	public void OnMainMenuButtonPressed()
 	{
-		GetTree().ReloadCurrentScene();
+		GetTree().ChangeSceneToFile(MAIN_MENU);
 	}
 
 	public void ShowScreen(string text, Type type)
 	{
 		if (!IsInstanceValid(label)) return;
 		if (!IsInstanceValid(continueButton)) return;
-		if (!IsInstanceValid(restartButton)) return;
+		if (!IsInstanceValid(mainMenuButton)) return;
 
 		label.Text = text;
 		continueButton.Visible = type == Type.WIN;
-		restartButton.Visible = type == Type.LOSE;
+		mainMenuButton.Visible = type == Type.LOSE;
 		Show();
 		GetTree().Paused = true;
 	}

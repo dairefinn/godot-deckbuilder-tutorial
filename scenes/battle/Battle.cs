@@ -29,7 +29,7 @@ public partial class Battle : Node2D
 		Events.Instance.PlayerHandDiscarded += enemyHandler.StartTurn;
 	}
 
-	public void StartBattle()
+    public void StartBattle()
 	{
 		GetTree().Paused = false;
 		SoundPlayer.TryPlayOnInstance("MusicPlayer", music, true);

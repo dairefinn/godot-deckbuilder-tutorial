@@ -34,7 +34,10 @@ public partial class Shaker : Node
         }
 
         tween.Finished += () => {
-            node.Position = originalPosition;
+            if (IsInstanceValid(node))
+            {
+                node.Position = originalPosition;
+            }
         };
     }
 

@@ -7,19 +7,20 @@ public partial class Campfire : Control
 
     [Export] public CharacterStats charStats;
 
-    public Button button;
+    public Button restButton;
     public AnimationPlayer animationPlayer;
 
     public override void _Ready()
     {
-        button = GetNode<Button>("%RestButton");
+        restButton = GetNode<Button>("%RestButton");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
-        button.Pressed += OnRestButtonPressed;
+        restButton.Pressed += OnRestButtonPressed;
     }
 
     public void OnRestButtonPressed()
     {
+        restButton.Disabled = true;
         charStats.Heal(Mathf.CeilToInt(charStats.maxHealth * 0.3f));
         animationPlayer.Play("fade_out");
     }

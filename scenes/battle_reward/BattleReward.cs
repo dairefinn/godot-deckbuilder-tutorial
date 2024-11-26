@@ -66,6 +66,7 @@ public partial class BattleReward : Control
 
     public void AddRelicReward(Relic relic)
     {
+        if (relic == null) return;
         RewardButton relicReward = REWARD_BUTTON.Instantiate<RewardButton>();
         relicReward.rewardIcon = relic.icon;
         relicReward.rewardText = relic.relicName;
@@ -91,7 +92,7 @@ public partial class BattleReward : Control
         cardRewards.CardRewardSelected += OnCardRewardTaken;
 
         Array<Card> cardRewardArray = new();
-        Array<Card> availableCards = characterStats.draftableCards.cards.Duplicate();
+        Array<Card> availableCards = characterStats.draftableCards.DuplicateCards();
 
         for (int i = 0; i < runStats.cardRewards; i++)
         {

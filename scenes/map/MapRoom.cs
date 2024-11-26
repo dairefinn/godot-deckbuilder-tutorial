@@ -32,6 +32,7 @@ public partial class MapRoom : Area2D
 		{ Room.Type.BOSS, new RoomIconData("res://art/tile_0105.png", new Vector2(1.25f, 1.25f)) }
 	};
 
+	[Signal] public delegate void ClickedEventHandler(Room room);
 	[Signal] public delegate void SelectedEventHandler(Room room);
 
 	public Sprite2D sprite2D;
@@ -95,6 +96,7 @@ public partial class MapRoom : Area2D
 		}
 
 		room.selected = true;
+		EmitSignal(SignalName.Clicked, room);
 		animationPlayer.Play("select");
 	}
 

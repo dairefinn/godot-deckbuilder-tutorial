@@ -32,7 +32,7 @@ public partial class Map : Node2D
         cameraEdgeY = MapGenerator.Y_DIST * (MapGenerator.FLOORS - 1);
     }
 
-    public override void _Input(InputEvent @event)
+    public override void _UnhandledInput(InputEvent @event)
     {
         if (!Visible) return;
 
@@ -122,6 +122,7 @@ public partial class Map : Node2D
         rooms.AddChild(newMapRoom);
         newMapRoom.room = room;
         newMapRoom.Selected += OnMapRoomSelected;
+        newMapRoom.Clicked += OnMapRoomClicked;
         ConnectLines(room);
 
         if (room.selected && room.row < floorsClimbed)
@@ -145,6 +146,13 @@ public partial class Map : Node2D
 
     public void OnMapRoomSelected(Room room)
     {
+        lastRoom = room;
+        floorsClimbed += 1;
+        Events.Instance.EmitSignal(Events.SignalName.MapExited, room);
+    }
+
+    public void OnMapRoomClicked(Room room)
+    {
         foreach (Node mapRoomNode in rooms.GetChildren())
         {
             if (mapRoomNode is not MapRoom mapRoom) continue;
@@ -153,10 +161,6 @@ public partial class Map : Node2D
                 mapRoom.available = false;
             }
         }
-
-        lastRoom = room;
-        floorsClimbed += 1;
-        Events.Instance.EmitSignal(Events.SignalName.MapExited, room);
     }
 
     public void LoadMap(Array<Array<Room>> map, int floorCompleted, Room lastRoomClimbed)

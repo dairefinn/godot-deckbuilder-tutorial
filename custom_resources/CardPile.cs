@@ -45,6 +45,30 @@ public partial class CardPile : Resource
         RNG.ArrayShuffle(cards);
     }
 
+    // We need this method because of a Godot issue reported here: https://github.com/godotengine/godot/issues/74918
+    public Array<Card> DuplicateCards()
+    {
+        Array<Card> newArray = new();
+
+        foreach (Card card in cards)
+        {
+            newArray.Add(card.Duplicate() as Card);
+        }
+
+        return newArray;
+    }
+
+    // We need this method because of a Godot issue reported here: https://github.com/godotengine/godot/issues/74918
+    public CardPile CustomDuplicate()
+    {
+        CardPile newCardPile = new()
+        {
+            cards = DuplicateCards()
+        };
+
+        return newCardPile;
+    }
+
     public override string ToString()
     {
         Array<string> cardStrings = new();

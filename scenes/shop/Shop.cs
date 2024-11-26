@@ -83,7 +83,7 @@ public partial class Shop : Control
     public void GenerateShopCards()
     {
         Array<Card> shopCardArray = new();
-        Array<Card> availableCards = charStats.draftableCards.cards.Duplicate(true);
+        Array<Card> availableCards = charStats.draftableCards.DuplicateCards();
         RNG.ArrayShuffle(availableCards);
         shopCardArray = availableCards[..3];
 

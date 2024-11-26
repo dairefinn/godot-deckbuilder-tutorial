@@ -1,6 +1,6 @@
-using Godot;
-
 namespace DeckBuilder;
+
+using Godot;
 
 public partial class CardAimingState : CardState
 {
@@ -33,6 +33,7 @@ public partial class CardAimingState : CardState
 		// If the mouse is at the bottom of the screen, or the right mouse button is pressed, revert to the base state
 		if ((mouseMotion && mouseAtBottom) || @event.IsActionPressed("right_mouse"))
 		{
+			cardUI.targets.Clear();
 			EmitSignal(CardState.SignalName.TransitionRequested, this, (int)CardState.State.BASE);
 			return;
 		}

@@ -1,6 +1,6 @@
-using Godot;
-
 namespace DeckBuilder;
+
+using Godot;
 
 public partial class CardClickedState : CardState
 {
